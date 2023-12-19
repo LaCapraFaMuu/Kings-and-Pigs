@@ -1,4 +1,4 @@
-final String GAME_TITLE = "Adventure Game";
+final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 60;
 
 final int playerSpeed = 5;
