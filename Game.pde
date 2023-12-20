@@ -23,7 +23,7 @@ void setup () {
    
   // Creazione player
   player = new Player(idle, 128, 128, 'w', 's', 'a', 'd');
-  player.position = new Vector((screenWidth/2)-32,(screenHeight/2)-32);
+  player.position = new Vector(screenX,screenY);
   player.speed = new Vector(playerSpeed,playerSpeed);
 }
 

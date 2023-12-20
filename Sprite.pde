@@ -1,5 +1,5 @@
 class Sprite {
-  public int currentFrame = 0; // Globale in modo che il valore venga resettato quando schiaccio il tasto per il movimento
+  int currentFrame = 0;
   PImage texture;
   PImage[] animation;
   int width, height;

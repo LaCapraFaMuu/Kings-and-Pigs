@@ -1,8 +1,12 @@
-public boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
+boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
+int screenX = (screenWidth/2)-(78/2);
+int screenY = (screenHeight/2)-(58/2);
+int worldX = tileSize * 7;
+int worldY = tileSize * 6;
 char keyUp, keyDown, keyLeft, keyRight;
 
 class Player extends Sprite {
-  public Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
+  Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
     super(animation, width, height);
     keyUp = up;
     keyDown = down;
@@ -20,7 +24,7 @@ class Player extends Sprite {
     loadAttackAnimation();
   }
   
-  public void keyPressed(char key) {
+  void keyPressed(char key) {
     if (key == keyUp) {
       keyUpPressed = true; 
     }
@@ -35,7 +39,7 @@ class Player extends Sprite {
     }
   }
   
-  public void keyReleased(char key) {
+ void keyReleased(char key) {
     if (key == keyUp) {
       keyUpPressed = false; 
     }
@@ -69,35 +73,35 @@ class Player extends Sprite {
     }
   }
  
-  public void update() {
+  void update() {
     if (keyUpPressed) {
-      position.y -= speed.y;
+      worldY -= speed.y;
     }
     if (keyDownPressed) {
-     position.y += speed.y;
+      worldY += speed.y;
     }
     if (keyLeftPressed) {
-      position.x -= speed.x;
+      worldX -= speed.x;
     }
     if (keyRightPressed) {
-      position.x += speed.x;
+      worldX += speed.x;
     }
   }
  
   // Metodi per caricare immagini in un array
-  public void loadIdleAnimation() {
+  void loadIdleAnimation() {
     for (int i = 0; i < idleFrameMax; i++) {
       idle[i] = loadImage("assets/player/idle/" + i + ".png");
     }
   }
  
-  public void loadRunAnimation() {
+  void loadRunAnimation() {
     for (int i = 0; i < runFrameMax; i++) {
       run[i] = loadImage("assets/player/run/" + i + ".png");
     }
   }
  
-  public void loadAttackAnimation() {
+  void loadAttackAnimation() {
     for (int i = 0; i < attackFrameMax; i++) {
       attack[i] = loadImage("assets/player/attack/" + i + ".png");
     }

@@ -3,7 +3,7 @@ class Tiles extends Sprite {
   
   Tiles(PImage[] tiles, int width, int height) {
     super(tiles, width, height);
-    mapTileNum = new int[maxScreenCol][maxScreenRow];
+    mapTileNum = new int[maxWorldCol][maxWorldRow];
     loadMap();
   }
   
@@ -18,13 +18,13 @@ class Tiles extends Sprite {
         for (String line : lines) {
           String[] numbers = splitTokens(line);
           
-          for (int col = 0; col < maxScreenCol && col < numbers.length; col++) {
+          for (int col = 0; col < maxWorldCol && col < numbers.length; col++) {
             int num = Integer.parseInt(numbers[col]);
             mapTileNum[col][row] = num;
           }
           row++;
           
-          if (row >= maxScreenRow) {
+          if (row >= maxWorldRow) {
             break;
           }
         }
@@ -45,20 +45,29 @@ class Tiles extends Sprite {
   }
 
   void displayTiles() {
-    int col = 0;
-    int row = 0;
-    int x = 0;
-    int y = 0;
-    while(col < maxScreenCol && row < maxScreenRow) {
-      int tileNum = mapTileNum[col][row];
-      image(tiles[tileNum], x, y, width, height);
-      col++;
-      x += tileSize;
-      if (col == maxScreenCol) {
-        col = 0;
-        x = 0;
-        row++;
-        y += tileSize;
+    int worldCol = 0;
+    int worldRow = 0;
+    while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
+      int tileNum = mapTileNum[worldCol][worldRow];
+      
+      int wldX = worldCol * tileSize;
+      int wldY = worldRow * tileSize;
+      int x = wldX - worldX + screenX;
+      int y = wldY - worldY + screenY;
+      
+      // If per ottimizzazione, non genera tiles che il player non vede
+      if (wldX + tileSize > worldX - screenX &&
+          wldX - tileSize * 2 < worldX + screenX &&
+          wldY + tileSize > worldY - screenY &&
+          wldY - tileSize * 2 < worldY + screenY) {
+        image(tiles[tileNum], x, y, width, height);
+      }
+      
+      worldCol++;
+
+      if (worldCol == maxWorldCol) {
+        worldCol = 0;
+        worldRow++;
       }
     }
   }
