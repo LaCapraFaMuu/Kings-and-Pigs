@@ -1,9 +1,9 @@
 class Tiles extends Sprite {
-  int mapTileNum[][];
   
   Tiles(PImage[] tiles, int width, int height) {
     super(tiles, width, height);
     mapTileNum = new int[maxWorldCol][maxWorldRow];
+    collision = new boolean[94];
     loadMap();
   }
   
@@ -37,13 +37,20 @@ class Tiles extends Sprite {
     }
   }
 
-
-  void generateTiles() {
+  // Metodo per caricare immagini dentro l'array
+  void loadTiles() {
     for (int i = 1; i < 94; i++) {
       tiles[i] = loadImage("assets/tiles/" + i + ".png"); 
+      if (i <= 47) { // 47 perche num delle tile che devono avere collisioni
+      collision[i] = true;  
+      }
+      else {
+      collision[i] = false; 
+      }
     }
   }
 
+  // Draw delle tiles di sfondo
   void displayTiles() {
     int worldCol = 0;
     int worldRow = 0;

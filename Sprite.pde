@@ -35,6 +35,5 @@ class Sprite {
     image(array[currentFrame], position.x, position.y, width, height);
     delay(delay);
     currentFrame++;
-    System.out.println(currentFrame); // DEBUG
   }
 }

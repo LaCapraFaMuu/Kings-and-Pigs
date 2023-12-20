@@ -1,9 +1,15 @@
+import java.awt.Rectangle;
+
 boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
 int screenX = (screenWidth/2)-(78/2);
 int screenY = (screenHeight/2)-(58/2);
 int worldX = tileSize * 7;
 int worldY = tileSize * 6;
 char keyUp, keyDown, keyLeft, keyRight;
+// Variabili per collisioni
+Rectangle solidArea;
+CollisionCheck cCheck = new CollisionCheck();
+String direction = "Up";
 
 class Player extends Sprite {
   Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
@@ -22,20 +28,26 @@ class Player extends Sprite {
     loadRunAnimation();
     loadIdleAnimation();
     loadAttackAnimation();
+    // Creazione hitbox player
+    solidArea = new Rectangle(35,25,25,70);
   }
   
   void keyPressed(char key) {
     if (key == keyUp) {
       keyUpPressed = true; 
+      direction = "Up";
     }
     if (key == keyDown) {
       keyDownPressed = true;
+      direction = "Down";
     }
     if (key == keyLeft) {
       keyLeftPressed = true;
+      direction = "Left";
     }
     if (key == keyRight) {
       keyRightPressed = true;
+      direction = "Right";
     }
   }
   
@@ -52,43 +64,42 @@ class Player extends Sprite {
     if (key == keyRight) {
       keyRightPressed = false;
     }
-       
-    if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed && currentFrame == run.length) { // Reset del frame per evitare che si blocchi
+    // Reset del frame per evitare che si blocchi l'animazione
+    if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed && currentFrame == run.length) {
       currentFrame = 0;
     }
   }
  
-  void mousePressed() {
+  void mouseClicked() {
     if (mouseButton == LEFT) {
       leftClickPressed = true;
     }
-  }
-
-  void mouseReleased() {
-    if (mouseButton == LEFT) {
-      leftClickPressed = false;
-    }
-    if (leftClickPressed && currentFrame == attack.length) { // Reset del frame per evitare che si blocchi
-       currentFrame = 0;
+    
+    if (leftClickPressed && currentFrame == attack.length) {
+      currentFrame = 0;
     }
   }
  
   void update() {
-    if (keyUpPressed) {
+    // Controllo collisione
+    collisionOn = false;
+    cCheck.checkTile();
+    
+    if (keyUpPressed && !collisionOn) {
       worldY -= speed.y;
     }
-    if (keyDownPressed) {
+    if (keyDownPressed && !collisionOn) {
       worldY += speed.y;
     }
-    if (keyLeftPressed) {
+    if (keyLeftPressed && !collisionOn) {
       worldX -= speed.x;
     }
-    if (keyRightPressed) {
+    if (keyRightPressed && !collisionOn) {
       worldX += speed.x;
     }
   }
  
-  // Metodi per caricare immagini in un array
+  // --------- Metodi per caricare immagini in un array ---------
   void loadIdleAnimation() {
     for (int i = 0; i < idleFrameMax; i++) {
       idle[i] = loadImage("assets/player/idle/" + i + ".png");

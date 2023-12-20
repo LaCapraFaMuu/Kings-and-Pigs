@@ -1,5 +1,5 @@
 /*
-video #5 0:0
+video #7 0:0
 fixare animazione attacco + trovare modo per rallentare animazioni senza delay
 */
 
@@ -19,7 +19,7 @@ void setup () {
   // Creazione sfondo
   tile = new Tiles(tiles, tileSize, tileSize);
   tile.position = new Vector();
-  tile.generateTiles();
+  tile.loadTiles();
    
   // Creazione player
   player = new Player(idle, 128, 128, 'w', 's', 'a', 'd');
@@ -38,13 +38,14 @@ void draw() {
    
   // Controlli per le azioni e i relativi draw
   if (leftClickPressed) {
-    player.draw(attack, 30);
+    player.draw(attack, 50);
+    leftClickPressed = false; // CAMBIARE PERCHE ANIMAZIONE MERDA
   }
   else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
-    player.draw(run, 20);
+    player.draw(run, 10);
   }
   else {
-    player.draw(idle, 45);
+    player.draw(idle, 50);
   }
 }
 
@@ -56,10 +57,6 @@ void keyReleased() {
   player.keyReleased(key);
 }
 
-void mousePressed() {
-  player.mousePressed();
-}
-
-void mouseReleased() {
-  player.mouseReleased();
+void mouseClicked(){
+  player.mouseClicked();
 }
