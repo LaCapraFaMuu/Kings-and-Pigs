@@ -18,18 +18,16 @@ class Player extends Sprite {
     keyDown = down;
     keyLeft = left;
     keyRight = right;
-    // Inizializzazione variabili click a false
+    // Inizializzazione variabili movimento a false
     keyUpPressed = false;
     keyDownPressed = false;
     keyLeftPressed = false;
     keyRightPressed = false;
     leftClickPressed = false;
     // Caricamento immagini dentro gli array
-    loadRunAnimation();
-    loadIdleAnimation();
-    loadAttackAnimation();
+    loadAnimations();
     // Creazione hitbox player
-    solidArea = new Rectangle(35,25,25,70);
+    solidArea = new Rectangle(35,55,25,40);
   }
   
   void keyPressed(char key) {
@@ -86,33 +84,29 @@ class Player extends Sprite {
     cCheck.checkTile();
     
     if (keyUpPressed && !collisionOn) {
-      worldY -= speed.y;
+      worldY -= playerSpeed;
     }
     if (keyDownPressed && !collisionOn) {
-      worldY += speed.y;
+      worldY += playerSpeed;
     }
     if (keyLeftPressed && !collisionOn) {
-      worldX -= speed.x;
+      worldX -= playerSpeed;
     }
     if (keyRightPressed && !collisionOn) {
-      worldX += speed.x;
+      worldX += playerSpeed;
     }
   }
  
-  // --------- Metodi per caricare immagini in un array ---------
-  void loadIdleAnimation() {
+  // Metodo per caricare immagini in un array
+  void loadAnimations() {
     for (int i = 0; i < idleFrameMax; i++) {
       idle[i] = loadImage("assets/player/idle/" + i + ".png");
     }
-  }
- 
-  void loadRunAnimation() {
+    
     for (int i = 0; i < runFrameMax; i++) {
       run[i] = loadImage("assets/player/run/" + i + ".png");
     }
-  }
- 
-  void loadAttackAnimation() {
+    
     for (int i = 0; i < attackFrameMax; i++) {
       attack[i] = loadImage("assets/player/attack/" + i + ".png");
     }

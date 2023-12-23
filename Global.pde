@@ -3,12 +3,12 @@ final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 60;
 
 // Variabili player
-final int playerSpeed = 4;
+final int playerSpeed = 5;
 final int playerX = 400;
 final int playerY = 150;
 boolean collisionOn = false;
 
-// Impostazioni per schermo
+// Variabili tiles
 final int scale = 3;
 final int originalTileSize = 16;
 final int tileSize = originalTileSize * scale;
@@ -38,3 +38,15 @@ final PImage[] attack = new PImage[attackFrameMax];
 final PImage[] tiles = new PImage[maxScreenCol*maxScreenRow];
 int mapTileNum[][];
 boolean[] collision;
+
+// Variabili oggetti
+Items bomb, box, door;
+String bombImg = "assets/objects/bomb/Bomb.png";
+int bombX = 12 * tileSize;
+int bombY = 3 * tileSize;
+String boxImg = "assets/objects/box/Box.png";
+int boxX = 5 * tileSize;
+int boxY = 4 * tileSize;
+String doorImg = "assets/objects/door/Door.png";
+int doorX = 18 * tileSize;
+int doorY = 8 * tileSize;

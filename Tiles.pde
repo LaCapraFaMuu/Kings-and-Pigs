@@ -39,7 +39,7 @@ class Tiles extends Sprite {
 
   // Metodo per caricare immagini dentro l'array
   void loadTiles() {
-    for (int i = 1; i < 94; i++) {
+    for (int i = 1; i < 94; i++) { // 94 Immagini tot in tiles
       tiles[i] = loadImage("assets/tiles/" + i + ".png"); 
       if (i <= 47) { // 47 perche num delle tile che devono avere collisioni
       collision[i] = true;  
@@ -67,7 +67,7 @@ class Tiles extends Sprite {
           wldX - tileSize * 2 < worldX + screenX &&
           wldY + tileSize > worldY - screenY &&
           wldY - tileSize * 2 < worldY + screenY) {
-        image(tiles[tileNum], x, y, width, height);
+         image(tiles[tileNum], x, y, width, height);
       }
       
       worldCol++;
