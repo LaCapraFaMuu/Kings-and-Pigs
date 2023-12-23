@@ -1,9 +1,4 @@
-![k+hWls](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/eacc3d1d-4a6c-4040-8322-a3f818eeab62)
+![IQCAru](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/6ce18249-ade6-4b68-97a1-a3684fd001d7)
+![Kings and Pigs](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/bd36b25c-c85e-476c-968a-643352a5c36a)
 
-# ---- Tiny Swords ----
-Have fun building your own little kingdom. This asset pack contains a collection of assets where little characters can build structures, collect resources, and fight enemies.
-
-![00Nbow](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/e5c896ab-21ab-49aa-9855-0319a566b212)
-![PQS9Oo](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/745c335c-0bd6-4100-a133-def5f75eee94)
-![HKtbr_](https://github.com/LaCapraFaMuu/King-and-Pigs/assets/151669081/4614cbca-434a-4161-b45f-fe5e1dcb5a8b)
-
+The King Human came to recover his kingdom from the called "Green Skins". He has a big heavy hammer that can throw any Pig to the air, but is not gonna be so easy. Pigs are well organized guides by the one and only, The King Pig. They also have boxes and bombs to throw to you at any time, without mentioning that they also have cannons that spit FIREEEEE !!!
