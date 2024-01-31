@@ -3,7 +3,7 @@ class Tiles extends Sprite {
   Tiles(PImage[] tiles, int width, int height) {
     super(tiles, width, height);
     mapTileNum = new int[maxWorldCol][maxWorldRow];
-    collision = new boolean[94];
+    collision = new boolean[94]; // 94 Immagini tot in tiles
     loadMap();
   }
   

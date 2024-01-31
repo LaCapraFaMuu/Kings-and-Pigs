@@ -27,8 +27,8 @@ class Sprite {
   // Draw per animazioni
   void draw(PImage[] array, int delay) {
     if (currentFrame >= array.length) currentFrame = 0;
-    image(array[currentFrame], x, y, width, height);
     delay(delay);
+    image(array[currentFrame], x, y, width, height);
     currentFrame++;
   }
 }

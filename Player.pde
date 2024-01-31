@@ -1,11 +1,15 @@
 import java.awt.Rectangle;
 
+// Variabili per tasti
 boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
+char keyUp, keyDown, keyLeft, keyRight;
+
+// Variabili per coordinate
 int screenX = (screenWidth/2)-(78/2);
 int screenY = (screenHeight/2)-(58/2);
 int worldX = tileSize * 7;
-int worldY = tileSize * 6;
-char keyUp, keyDown, keyLeft, keyRight;
+int worldY = tileSize * 8;
+
 // Variabili per collisioni
 Rectangle solidArea;
 CollisionCheck cCheck = new CollisionCheck();
@@ -24,10 +28,8 @@ class Player extends Sprite {
     keyLeftPressed = false;
     keyRightPressed = false;
     leftClickPressed = false;
-    // Caricamento immagini dentro gli array
-    loadAnimations();
     // Creazione hitbox player
-    solidArea = new Rectangle(35,55,25,40);
+    solidArea = new Rectangle(solidAreaX,solidAreaY, solidAreaWidth, solidAreaHeight);
   }
   
   void keyPressed(char key) {
@@ -82,6 +84,8 @@ class Player extends Sprite {
     // Controllo collisione
     collisionOn = false;
     cCheck.checkTile();
+    int objIndex = cCheck.checkObject(true);
+    pickUpObject(objIndex);
     
     if (keyUpPressed && !collisionOn) {
       worldY -= playerSpeed;
@@ -96,19 +100,10 @@ class Player extends Sprite {
       worldX += playerSpeed;
     }
   }
- 
-  // Metodo per caricare immagini in un array
-  void loadAnimations() {
-    for (int i = 0; i < idleFrameMax; i++) {
-      idle[i] = loadImage("assets/player/idle/" + i + ".png");
-    }
-    
-    for (int i = 0; i < runFrameMax; i++) {
-      run[i] = loadImage("assets/player/run/" + i + ".png");
-    }
-    
-    for (int i = 0; i < attackFrameMax; i++) {
-      attack[i] = loadImage("assets/player/attack/" + i + ".png");
+  
+  void pickUpObject(int i) {
+    if (i != 999) {
+      
     }
   }
 }
