@@ -74,18 +74,13 @@ class Player extends Sprite {
     if (mouseButton == LEFT) {
       leftClickPressed = true;
     }
-    
-    if (leftClickPressed && currentFrame == attack.length) {
-      currentFrame = 0;
-    }
   }
  
   void update() {
     // Controllo collisione
     collisionOn = false;
     cCheck.checkTile();
-    int objIndex = cCheck.checkObject(true);
-    pickUpObject(objIndex);
+    cCheck.checkObject();
     
     if (keyUpPressed && !collisionOn) {
       worldY -= playerSpeed;
@@ -98,12 +93,6 @@ class Player extends Sprite {
     }
     if (keyRightPressed && !collisionOn) {
       worldX += playerSpeed;
-    }
-  }
-  
-  void pickUpObject(int i) {
-    if (i != 999) {
-      
     }
   }
 }

@@ -2,6 +2,13 @@
 final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 30;
 
+// Variabili sounds
+final String bgMusicPath = "assets/sounds/music/Goblins_Den_(Regular).wav";
+final String walkPath = "assets/sounds/effects/walk.wav";
+final String attackPath = "assets/sounds/effects/attack.wav";
+final String explosionPath = "assets/sounds/effects/explosion.wav";
+final String doorPath = "assets/sounds/effects/door.wav";
+
 // Variabili player
 final int playerSpeed = 5;
 final int playerX = 400;
@@ -53,6 +60,8 @@ Items bomb, box, door, window, LVL1bomb, LVL1box, LVL1door, LVL1window, LVL1wind
 final String bombImg = "assets/objects/bomb/Bomb.png";
 final int bombIgnitionFrames = 4;
 final int bombExplosionFrames = 5;
+final int bombIgniteDelay = 50;
+final int bombExplosionDelay = 60;
 final PImage[] bombIgnitionAnimation = new PImage[bombIgnitionFrames];
 final PImage[] bombExplosionAnimation = new PImage[bombExplosionFrames];
 final int bombX = 4 * tileSize + 8;
@@ -69,6 +78,8 @@ final int LVL1boxY = 8 * tileSize + 5;
 
 // Variabili door
 final String doorImg = "assets/objects/door/Door.png";
+final int doorOpeningFrames = 5;
+final PImage[] doorOpeningAnimation = new PImage[doorOpeningFrames];
 final int doorX = 11 * tileSize + 20;
 final int doorY = 7 * tileSize - 12;
 final int LVL1doorX = 27 * tileSize + 20;

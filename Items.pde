@@ -14,6 +14,8 @@ int ItemCreationCounter = 0;
 int bombExplosion = 0;
 int LVL1bombExplosion = 0;
 
+boolean[] doorOpening = new boolean[2];
+
 class Items {
   int x, y, width, height;
   PImage item;
@@ -38,6 +40,8 @@ class Items {
     solidObjHeight[ItemCreationCounter] = height;
     itemSolidArea[ItemCreationCounter] = new Rectangle(solidObjAreaX[ItemCreationCounter], solidObjAreaY[ItemCreationCounter], solidObjWidth[ItemCreationCounter],  solidObjHeight[ItemCreationCounter]);
     ItemCreationCounter++;
+    // Inizializzazzione variabili per animazione porta
+    doorOpening[0] = false; doorOpening[1] = false;
   }
   
   void drawItem() {
@@ -53,27 +57,50 @@ class Items {
   
   void objInteraction(int i) {
     switch(i) {
-      // Bomb
       case 0:
         if (ctrl) {
           bombExplosion++;
           ctrl = false;
         }
         break;
-      // Door
       case 2:
-        // Va messo controllo se fatto qulcosa di specifico (per prossimi livelli basta fare un altro switch che per ogni case aumenta il contatore)
-        worldX = 23 * tileSize;
-        worldY = 8 * tileSize;
-        break;
-        
+        doorOpening[0] = true;
+        if (repatSound[2]) {
+          doorSound.play();
+          repatSound[2] = false;
+        }
+        int doorOpeningDelay = 500;
+        if (timerRunning) {
+          int elapsedTime = millis() - startTime;
+          if (elapsedTime >= doorOpeningDelay) {
+            worldX = 23 * tileSize;
+            worldY = 8 * tileSize;
+            timerRunning = false;
+          }
+        } else startTimer();
+        break; 
       case 4:
         if (LVL1ctrl) {
           LVL1bombExplosion++;
           LVL1ctrl = false;
         }
         break;
-        
+     case 6:
+        doorOpening[1] = true;
+        if (repatSound[3]) {
+          doorSound.play();
+          repatSound[3] = false;
+        }
+        int LVL1doorOpeningDelay = 500;
+        if (timerRunning) {
+          int elapsedTime = millis() - startTime;
+          if (elapsedTime >= LVL1doorOpeningDelay) {
+            worldX = 7 * tileSize;
+            worldY = 18 * tileSize;
+            timerRunning = false;
+          }
+        } else startTimer();
+        break;
       default:
         ctrl = false;
         LVL1ctrl = false;

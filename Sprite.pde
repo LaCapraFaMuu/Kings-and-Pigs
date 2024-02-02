@@ -24,11 +24,16 @@ class Sprite {
     image(texture, x, y, width, height);
   }
   
-  // Draw per animazioni
+  int lastFrameTime = 0;
   void draw(PImage[] array, int delay) {
-    if (currentFrame >= array.length) currentFrame = 0;
-    delay(delay);
-    image(array[currentFrame], x, y, width, height);
-    currentFrame++;
+    if (array.length > 0) {
+      if (millis() - lastFrameTime > delay) {
+        currentFrame = (currentFrame + 1) % array.length;
+        lastFrameTime = millis();
+      }
+      if (currentFrame >= 0 && currentFrame < array.length) {
+        image(array[currentFrame], x, y, width, height);
+      }
+    }
   }
 }

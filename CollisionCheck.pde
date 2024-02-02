@@ -93,85 +93,72 @@ class CollisionCheck {
             LVL1boxY + solidObjHeight[i] > solidAreaY)
             control = true;
         break;
+      case 6:
+        if (LVL1doorX < solidAreaX + solidAreaWidth &&
+            LVL1doorX + solidObjWidth[i] > solidAreaX && 
+            LVL1doorY  < solidAreaY + solidAreaHeight && 
+            LVL1doorY + solidObjHeight[i] > solidAreaY)
+            control = true;
+        break;
     }
     return control;
   }
   
-  int checkObject(boolean player) {
-    int index = 999;
-    for (int i = 0; i < items.length; i++) {
-      if (items[i] != null) {
-        solidAreaX = worldX + solidAreaX;
-        solidAreaY = worldY + solidAreaY;
-        
-        switch (direction) {
-          case "Up":
-            solidAreaY -= playerSpeed;
-            if (checkCoordinates(i)) {
-              if (interactable[i]) {
-                items[i].objInteraction(i);
-              }
-              else if (collisionObj[i]) {
-                collisionOn = true; 
-              }
-              
-              if (player == true) {
-                index = i; 
-              }
+  void checkObject() {
+    for (int i = 0; i < totObj; i++) {
+      solidAreaX = worldX + solidAreaX;
+      solidAreaY = worldY + solidAreaY;
+      
+      switch (direction) {
+        case "Up":
+          solidAreaY -= playerSpeed;
+          if (checkCoordinates(i)) {
+            if (interactable[i]) {
+              items[i].objInteraction(i);
             }
-            break;
-          case "Down":
-            solidAreaY += playerSpeed;
-            if (checkCoordinates(i)) {
-              if (interactable[i]) {
-                items[i].objInteraction(i);
-              }
-              else if (collisionObj[i]) {
-                collisionOn = true; 
-              }
-              
-              if (player == true) {
-                index = i; 
-              }
+            else if (collisionObj[i]) {
+              collisionOn = true; 
             }
-            break;
-          case "Left":
-            solidAreaX -= playerSpeed;
-            if (checkCoordinates(i)) {
-              if (interactable[i]) {
-                items[i].objInteraction(i);
-              }
-              else if (collisionObj[i]) {
-                collisionOn = true; 
-              }
-              
-              if (player == true) {
-                index = i; 
-              }
+          }
+          break;
+        case "Down":
+          solidAreaY += playerSpeed;
+          if (checkCoordinates(i)) {
+            if (interactable[i]) {
+              items[i].objInteraction(i);
             }
-            break;
-          case "Right":
-            solidAreaX += playerSpeed;
-            if (checkCoordinates(i)) {
-              if (interactable[i]) {
-                items[i].objInteraction(i);
-              }
-              else if (collisionObj[i]) {
-                collisionOn = true; 
-              }
-              
-              if (player == true) {
-                index = i; 
-              }
+            else if (collisionObj[i]) {
+              collisionOn = true; 
             }
-            break;
-        }
-        solidAreaX = solidAreaDefaultX;
-        solidAreaY = solidAreaDefaultY;
-        solidObjAreaX[i] = solidObjDefaultAreaX[i];
-        solidObjAreaY[i] = solidObjDefaultAreaY[i];
+          }
+          break;
+        case "Left":
+          solidAreaX -= playerSpeed;
+          if (checkCoordinates(i)) {
+            if (interactable[i]) {
+              items[i].objInteraction(i);
+            }
+            else if (collisionObj[i]) {
+              collisionOn = true; 
+            }
+          }
+          break;
+        case "Right":
+          solidAreaX += playerSpeed;
+          if (checkCoordinates(i)) {
+            if (interactable[i]) {
+              items[i].objInteraction(i);
+            }
+            else if (collisionObj[i]) {
+              collisionOn = true; 
+            }
+          }
+          break;
       }
+      solidAreaX = solidAreaDefaultX;
+      solidAreaY = solidAreaDefaultY;
+      solidObjAreaX[i] = solidObjDefaultAreaX[i];
+      solidObjAreaY[i] = solidObjDefaultAreaY[i];
     }
-    return index;
   }
 }
