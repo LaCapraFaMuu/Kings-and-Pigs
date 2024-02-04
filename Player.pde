@@ -1,20 +1,5 @@
 import java.awt.Rectangle;
 
-// Variabili per tasti
-boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
-char keyUp, keyDown, keyLeft, keyRight;
-
-// Variabili per coordinate
-int screenX = (screenWidth/2)-(78/2);
-int screenY = (screenHeight/2)-(58/2);
-int worldX = tileSize * 7;
-int worldY = tileSize * 8;
-
-// Variabili per collisioni
-Rectangle solidArea;
-CollisionCheck cCheck = new CollisionCheck();
-String direction = "Up";
-
 class Player extends Sprite {
   Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
     super(animation, width, height);
@@ -82,6 +67,7 @@ class Player extends Sprite {
     cCheck.checkTile();
     cCheck.checkObject();
     
+    // Movimento player
     if (keyUpPressed && !collisionOn) {
       worldY -= playerSpeed;
     }

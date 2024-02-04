@@ -1,27 +1,9 @@
 import java.awt.Rectangle;
 
-Rectangle[] itemSolidArea = new Rectangle[totObj];
-boolean[] collisionObj = new boolean[totObj];
-boolean[] interactable = new boolean[totObj];
-int[] solidObjAreaX = new int[totObj];
-int[] solidObjAreaY = new int[totObj];
-int[] solidObjDefaultAreaX = new int[totObj];
-int[] solidObjDefaultAreaY = new int[totObj];
-int[] solidObjWidth = new int[totObj];
-int[] solidObjHeight = new int[totObj];
-int ItemCreationCounter = 0;
-// Variabili per controllo dei draw degli item se distrutti
-int bombExplosion = 0;
-int LVL1bombExplosion = 0;
-
-boolean[] doorOpening = new boolean[2];
-
 class Items {
   int x, y, width, height;
   PImage item;
   int currentFrame = 0;
-  boolean ctrl = true;
-  boolean LVL1ctrl = true;
   
   Items(String path, int x, int y, int width, int height, boolean collision, boolean interactableObj) {
     this.x = x;
@@ -40,8 +22,6 @@ class Items {
     solidObjHeight[ItemCreationCounter] = height;
     itemSolidArea[ItemCreationCounter] = new Rectangle(solidObjAreaX[ItemCreationCounter], solidObjAreaY[ItemCreationCounter], solidObjWidth[ItemCreationCounter],  solidObjHeight[ItemCreationCounter]);
     ItemCreationCounter++;
-    // Inizializzazzione variabili per animazione porta
-    doorOpening[0] = false; doorOpening[1] = false;
   }
   
   void drawItem() {
@@ -55,55 +35,73 @@ class Items {
     }
   }
   
+  // Metodo per logica delle interazioni con gli oggetti
   void objInteraction(int i) {
     switch(i) {
       case 0:
-        if (ctrl) {
-          bombExplosion++;
-          ctrl = false;
+        if (bombControls[0]) {
+          bombExplosion[0]++;
+          bombControls[0] = false;
         }
         break;
       case 2:
         doorOpening[0] = true;
-        if (repatSound[2]) {
-          doorSound.play();
-          repatSound[2] = false;
-        }
         int doorOpeningDelay = 500;
-        if (timerRunning) {
-          int elapsedTime = millis() - startTime;
+        if (timerRunning[12]) {
+          int elapsedTime = millis() - startTime[12];
           if (elapsedTime >= doorOpeningDelay) {
             worldX = 23 * tileSize;
             worldY = 8 * tileSize;
-            timerRunning = false;
+            timerRunning[12] = false;
           }
-        } else startTimer();
+        } else startTimer(12);
         break; 
       case 4:
-        if (LVL1ctrl) {
-          LVL1bombExplosion++;
-          LVL1ctrl = false;
+        if (bombControls[1]) {
+          bombExplosion[1]++;
+          bombControls[1] = false;
         }
         break;
      case 6:
         doorOpening[1] = true;
-        if (repatSound[3]) {
-          doorSound.play();
-          repatSound[3] = false;
-        }
         int LVL1doorOpeningDelay = 500;
-        if (timerRunning) {
-          int elapsedTime = millis() - startTime;
+        if (timerRunning[13]) {
+          int elapsedTime = millis() - startTime[13];
           if (elapsedTime >= LVL1doorOpeningDelay) {
-            worldX = 7 * tileSize;
-            worldY = 18 * tileSize;
-            timerRunning = false;
+            worldX = 5 * tileSize;
+            worldY = 15 * tileSize;
+            timerRunning[13] = false;
           }
-        } else startTimer();
+        } else startTimer(13);
+        break; 
+      case 9:
+        if (bombControls[2]) {
+          bombExplosion[2]++;
+          bombControls[2] = false;
+        }
         break;
+      case 10:
+        if (bombControls[3]) {
+          bombExplosion[3]++;
+          bombControls[3] = false;
+        }
+        break;
+      case 11:
+        if (bombControls[4]) {
+          bombExplosion[4]++;
+          bombControls[4] = false;
+        }
+        break;
+      case 12:
+        if (bombControls[5]) {
+          bombExplosion[5]++;
+          bombControls[5] = false;
+        }
+        break;  
       default:
-        ctrl = false;
-        LVL1ctrl = false;
+        for (int j = 0; j < bombControls.length; j++) {
+          bombControls[j] = false;
+        }
         break;
     }
   }
