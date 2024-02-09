@@ -55,7 +55,7 @@ class CollisionCheck {
         case 0:
           if (bombX < solidAreaX + solidAreaWidth &&
               bombX + solidObjWidth[i] > solidAreaX && 
-              bombY  < solidAreaY + solidAreaHeight && 
+              bombY  < solidAreaY + solidAreaHeight &&
               bombY + solidObjHeight[i] > solidAreaY)
               control = true;
           break;
@@ -102,28 +102,28 @@ class CollisionCheck {
               control = true;
           break;
         case 9:
-            if (LVL2bombX < solidAreaX + solidAreaWidth &&
+          if (LVL2bombX < solidAreaX + solidAreaWidth &&
               LVL2bombX + solidObjWidth[i] > solidAreaX && 
               LVL2bombY  < solidAreaY + solidAreaHeight && 
               LVL2bombY + solidObjHeight[i] > solidAreaY)
               control = true;
           break;
         case 10:
-            if (LVL2bombX2 < solidAreaX + solidAreaWidth &&
+          if (LVL2bombX2 < solidAreaX + solidAreaWidth &&
               LVL2bombX2 + solidObjWidth[i] > solidAreaX && 
               LVL2bombY2  < solidAreaY + solidAreaHeight && 
               LVL2bombY2 + solidObjHeight[i] > solidAreaY)
               control = true;
           break;
         case 11:
-            if (LVL2bombX3 < solidAreaX + solidAreaWidth &&
+          if (LVL2bombX3 < solidAreaX + solidAreaWidth &&
               LVL2bombX3 + solidObjWidth[i] > solidAreaX && 
               LVL2bombY3  < solidAreaY + solidAreaHeight && 
               LVL2bombY3 + solidObjHeight[i] > solidAreaY)
               control = true;
           break;
         case 12:
-            if (LVL2bombX4 < solidAreaX + solidAreaWidth &&
+          if (LVL2bombX4 < solidAreaX + solidAreaWidth &&
               LVL2bombX4 + solidObjWidth[i] > solidAreaX && 
               LVL2bombY4  < solidAreaY + solidAreaHeight && 
               LVL2bombY4 + solidObjHeight[i] > solidAreaY)
@@ -144,6 +144,17 @@ class CollisionCheck {
               control = true;
           break;
       }
+    }
+    return control;
+  }
+  
+  boolean checkAnimation(int i) {
+    boolean control = false;
+    if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
+      Rectangle explosionArea = new Rectangle(bombExplosionAnimationFrames.x, bombExplosionAnimationFrames.y, 170, 170);
+      Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
+      if (playerHitbox.intersects(explosionArea))
+          control = true;
     }
     return control;
   }

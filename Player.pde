@@ -1,5 +1,3 @@
-import java.awt.Rectangle;
-
 class Player extends Sprite {
   Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
     super(animation, width, height);
@@ -14,7 +12,7 @@ class Player extends Sprite {
     keyRightPressed = false;
     leftClickPressed = false;
     // Creazione hitbox player
-    solidArea = new Rectangle(solidAreaX,solidAreaY, solidAreaWidth, solidAreaHeight);
+    solidArea = new Rectangle(solidAreaX, solidAreaY, solidAreaWidth, solidAreaHeight);
   }
   
   void keyPressed(char key) {

@@ -3,13 +3,29 @@ final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 30;
 
 // Variabili sounds
+Sound backgroundMusic, bossMusic, walkSound, attackSound, explosionSound, endMusic;
 final String bgMusicPath = "assets/sounds/music/Goblins_Den_(Regular).wav";
+final String bossMusicPath = "assets/sounds/music/Goblins_Dance_(Battle).wav";
+final String endMusicPath = "assets/sounds/music/endMusic.wav";
 final String walkPath = "assets/sounds/effects/walk.wav";
 final String attackPath = "assets/sounds/effects/attack.wav";
 final String explosionPath = "assets/sounds/effects/explosion.wav";
 
+// Variabili HUD
+SingleSprite heart, heart2, heart3, heartBg, gameOverImg;
+final String heartPath = "assets/hud/heart.png";
+final String heartBgPath = "assets/hud/LiveBar.png";
+final String gameOverPath = "assets/hud/GameOver.png";
+PImage heartTexture, heartBgTexture, gameOverTexture;
+final int heartX = 43;
+final int heartY = 34;
+final int heartBgX = 10;
+final int heartBgY = 10;
+
 // Variabili player
-final int playerSpeed = 5;
+Player player;
+int playerSpeed = 5;
+int life = 3;
 final int playerX = 400;
 final int playerY = 150;
 boolean collisionOn = false;
@@ -21,6 +37,16 @@ final int solidAreaDefaultX = solidAreaX;
 final int solidAreaDefaultY = solidAreaY;
 boolean keyUpPressed, keyDownPressed, keyLeftPressed, keyRightPressed, leftClickPressed;
 char keyUp, keyDown, keyLeft, keyRight;
+// Variabili per animazione player
+final int idleFrame = 1;
+final int idleFrameMax = 11;
+final int runFrameMax = 8;
+final int attackFrameMax = 3;
+final int deadFrameMax = 4;
+final PImage[] idle = new PImage[idleFrameMax];
+final PImage[] run = new PImage[runFrameMax];
+final PImage[] attack = new PImage[attackFrameMax];
+final PImage[] dead = new PImage[deadFrameMax];
 
 // Variabili per collisioni
 Rectangle solidArea;
@@ -28,6 +54,7 @@ CollisionCheck cCheck = new CollisionCheck();
 String direction = "Up";
 
 // Variabili tiles
+Tiles tile;
 final int scale = 3;
 final int originalTileSize = 16;
 final int tileSize = originalTileSize * scale;
@@ -48,26 +75,20 @@ final int maxWorldRow = 25;
 final int worldWidth = tileSize * maxWorldCol;
 final int worldHeight = tileSize * maxWorldRow;
 
-// Variabili per animazione player
-final int idleFrame = 1;
-final int idleFrameMax = 11;
-final int runFrameMax = 8;
-final int attackFrameMax = 3;
-final PImage[] idle = new PImage[idleFrameMax];
-final PImage[] run = new PImage[runFrameMax];
-final PImage[] attack = new PImage[attackFrameMax];
-
 // Variabili per tiles
 final PImage[] tiles = new PImage[maxScreenCol*maxScreenRow];
 int mapTileNum[][];
 boolean[] collision;
 
 // Variabili per timer
-final int totTimers = 14; // 11 Timer in questo file dall'ordine dall'alto al basso e altri 2 in items
+final int totTimers = 16; // 11 Timer in questo file dall'ordine dall'alto al basso e altri 3 in items e 1 in gameOver
 final int[] startTime = new int[totTimers];
 final boolean[] timerRunning = new boolean[totTimers];
 
 // Variabili per animazioni
+BombAnimation bombAnimation;
+BombExplosionAnimation bombExplosionAnimationFrames;
+DoorAnimation doorAnimation;
 int[] bombExplosion = new int[6];
 boolean[] bombControls = new boolean[6];
 boolean[] doorOpening = new boolean[3];

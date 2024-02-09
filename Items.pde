@@ -1,5 +1,3 @@
-import java.awt.Rectangle;
-
 class Items {
   int x, y, width, height;
   PImage item;
@@ -68,6 +66,8 @@ class Items {
         if (timerRunning[13]) {
           int elapsedTime = millis() - startTime[13];
           if (elapsedTime >= LVL1doorOpeningDelay) {
+            backgroundMusic.stop();
+            bossMusic.loop();
             worldX = 5 * tileSize;
             worldY = 15 * tileSize;
             timerRunning[13] = false;
@@ -97,7 +97,18 @@ class Items {
           bombExplosion[5]++;
           bombControls[5] = false;
         }
-        break;  
+        break;
+      case 14:
+        doorOpening[2] = true;
+        int LVL2doorOpeningDelay = 500;
+        if (timerRunning[14]) {
+          int elapsedTime = millis() - startTime[13];
+          if (elapsedTime >= LVL2doorOpeningDelay) {
+            // Quello da fare per la porta
+            timerRunning[14] = false;
+          }
+        } else startTimer(14);
+        break; 
       default:
         for (int j = 0; j < bombControls.length; j++) {
           bombControls[j] = false;

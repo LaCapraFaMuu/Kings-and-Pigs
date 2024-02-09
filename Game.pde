@@ -1,15 +1,10 @@
 /*
 video #10 0:00
-Per aggiungere interazione a ultima porta aggiungere il case in items
+Riga 107 Items da mettere chiamata alla classe della ui della vittoria
 */
 
-// Variabili per oggetti
-Player player;
-Tiles tile;
-BombAnimation bombAnimation;
-BombExplosionAnimation bombExplosionAnimationFrames;
-DoorAnimation doorAnimation;
-Sound backgroundMusic, walkSound, attackSound, explosionSound;
+import java.awt.Rectangle;
+
 
 String rndPath() {
   int rnd = (int)random(2);
@@ -37,6 +32,10 @@ void loadAnimations() {
   for (int i = 0; i < attackFrameMax; i++) {
     attack[i] = loadImage("assets/player/attack/" + i + ".png");
   }
+  
+  for (int i = 0; i < deadFrameMax; i++) {
+    dead[i] = loadImage("assets/player/dead/" + i + ".png");
+  }
     
   for (int i = 0; i < bombIgnitionFrames; i++) {
     bombIgnitionAnimation[i] = loadImage("assets/objects/bomb/" + i + ".png");
@@ -59,32 +58,66 @@ void loadAnimations() {
   for (int i = 0; i < bombControls.length; i++) {
     bombControls[i] = true;
   }
+  heartTexture = loadImage(heartPath);
+  heartBgTexture = loadImage(heartBgPath);
+  gameOverTexture = loadImage(gameOverPath);
+}
+
+// Controlli per le azioni e i relativi draw del player
+void playerMovment() {
+  if (leftClickPressed) {
+    int delayAttack = 150;
+    player.draw(attack, 80);
+    if (timerRunning[9]) {
+      int elapsedTime = millis() - startTime[9];
+      if (elapsedTime >= delayAttack) {
+        attackSound.play();
+        leftClickPressed = false;
+        timerRunning[9] = false;
+      }
+    } else startTimer(9);
+  }
+  else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
+    int delaySound = 180;
+    player.draw(run, 60);
+    if (timerRunning[10]) {
+      int elapsedTime = millis() - startTime[10];
+      if (elapsedTime >= delaySound) {
+        walkSound.play();
+        timerRunning[10] = false;
+      }
+    } else startTimer(10);
+  }
+  else {
+    player.draw(idle, 100);
+  } 
 }
 
 void explosionHandler(int index, int bombCounter, Items bomb) {
     int bombStartTime = 1000;
     int bombExplosionTime = 200;
+    int bombCollisionIndex = 0; // Variabile da passare per controllare la collisione
     switch(index) {
         case 0:
             switch(bombCounter) {
                 case 0:
-                bomb.drawItem();
-                break;
+                  bomb.drawItem();
+                  break;
                 case 1:
-                LVL1bomb.drawItem();
-                break;
+                  LVL1bomb.drawItem();
+                  break;
                 case 2:
-                LVL2bomb.drawItem();
-                break;
+                  LVL2bomb.drawItem();
+                  break;
                 case 3:
-                LVL2bomb2.drawItem();
-                break;
+                  LVL2bomb2.drawItem();
+                  break;
                 case 4:
-                LVL2bomb3.drawItem();
-                break;
+                  LVL2bomb3.drawItem();
+                  break;
                 case 5:
-                LVL2bomb4.drawItem();
-                break;
+                  LVL2bomb4.drawItem();
+                  break;
             }
             break;
         case 1:
@@ -103,12 +136,33 @@ void explosionHandler(int index, int bombCounter, Items bomb) {
             bombExplosionAnimationFrames.x = bomb.x - worldX + screenX;
             bombExplosionAnimationFrames.y = bomb.y - worldY + screenY;
             bombExplosionAnimationFrames.draw(bombExplosionAnimation, bombExplosionDelay);
+            switch(bombCounter) {
+              case 0:
+                bombCollisionIndex = 0;
+                break;
+              case 1:
+                bombCollisionIndex = 4;
+                break;
+              case 2:
+                bombCollisionIndex = 9;
+                break;
+              case 3:
+                bombCollisionIndex = 10;
+                break;
+              case 4:
+                bombCollisionIndex = 11;
+                break;
+              case 5:
+                bombCollisionIndex = 12;
+                break; 
+            }
             if (timerRunning[bombCounter]) {
                 int elapsedTime = millis() - startTime[bombCounter];
                 if (elapsedTime >= bombExplosionTime) {
-                explosionSound.play();
-                bombExplosion[bombCounter]++;
-                timerRunning[bombCounter] = false;
+                  if (cCheck.checkAnimation(bombCollisionIndex)) life--;
+                  explosionSound.play();
+                  bombExplosion[bombCounter]++;
+                  timerRunning[bombCounter] = false;
                 }
             } else startTimer(bombCounter);
             break; 
@@ -135,7 +189,7 @@ void doorOpeningHandler(boolean doorOpening, int doorCounter, Items door) {
 }
 
 void settings() {
-  size(screenWidth,screenHeight);
+  size(screenWidth, screenHeight);
 }
 
 void setup () {
@@ -143,11 +197,14 @@ void setup () {
   windowResizable(false);
   frameRate(FRAME_RATE);
   background(0);
+  
   // Caricamento array per animazioni
   loadAnimations();
   
   // Creazione audio
   backgroundMusic = new Sound(this, bgMusicPath);
+  bossMusic = new Sound(this, bossMusicPath);
+  endMusic = new Sound(this, endMusicPath);
   walkSound = new Sound(this, walkPath);
   attackSound = new Sound(this, attackPath);
   explosionSound = new Sound(this, explosionPath);
@@ -157,7 +214,7 @@ void setup () {
   tile = new Tiles(tiles, tileSize, tileSize);
   tile.loadTiles();
   
-  // Creazione oggetti (true / false alla fine per dire se hanno hitbox o no)
+  // Creazione oggetti (Primo true/false per dire se hanno hitbox o no | Secondo true/false per dire se hanno interazioni o no)
   bomb = new Items(bombImg, bombX, bombY, 128, 128, false, true);
   box = new Items(boxImg, boxX, boxY, 48, 42, true, false);
   door = new Items(doorImg, doorX, doorY, 100, 110, false, true);
@@ -179,20 +236,27 @@ void setup () {
   LVL2window2 = new Items(rndPath(), LVL2windowX2, LVL2windowY2, 120, 120, false, false);
   LVL2window3 = new Items(rndPath(), LVL2windowX3, LVL2windowY3, 120, 120, false, false);
   
-  // Creazione animazioni
-  bombAnimation = new BombAnimation(bombIgnitionAnimation, 128, 128);
-  bombExplosionAnimationFrames = new BombExplosionAnimation(bombExplosionAnimation, 128, 128);
-  doorAnimation = new DoorAnimation(doorOpeningAnimation, 100, 110);
-  
   // Caricamento array item
   items[0] = bomb; items[1] = box; items[2] = door; items[3] = window;
   items[4] = LVL1bomb; items[5] = LVL1box; items[6] = LVL1door; items[7] = LVL1window; items[8] = LVL1window2;
   items[9] = LVL2bomb; items[10] = LVL2bomb2; items[11] = LVL2bomb3; items[12] = LVL2bomb4; items[13] = LVL2box; items[14] = LVL2door;
+  
+  // Creazione animazioni
+  bombAnimation = new BombAnimation(bombIgnitionAnimation, 128, 128);
+  bombExplosionAnimationFrames = new BombExplosionAnimation(bombExplosionAnimation, 128, 128);
+  doorAnimation = new DoorAnimation(doorOpeningAnimation, 100, 110); 
 
   // Creazione player
   player = new Player(idle, 128, 128, 'w', 's', 'a', 'd');
   player.x = screenX;
   player.y = screenY;
+  
+  // Creazione HUD
+  heart = new SingleSprite(heartTexture, heartX, heartY, 20, 20);
+  heart2 = new SingleSprite(heartTexture, heartX + 22, heartY, 20, 20);
+  heart3 = new SingleSprite(heartTexture, heartX + 22 * 2, heartY, 20, 20);
+  heartBg = new SingleSprite(heartBgTexture, heartBgX, heartBgY, 132, 68);
+  gameOverImg = new SingleSprite(gameOverTexture, screenX - 150, screenY - 150, 300, 300); // DA CAMBIARE QUANDO CAMBIO IMMAGINE
 }
 
 void draw() {  
@@ -202,7 +266,7 @@ void draw() {
   
   // Draw mappa
   tile.displayTiles();
-  
+
   // Animazioni bomb
   explosionHandler(bombExplosion[0], 0, bomb);
   explosionHandler(bombExplosion[1], 1, LVL1bomb);
@@ -226,33 +290,29 @@ void draw() {
   LVL2window.drawItem();
   LVL2window2.drawItem();
   LVL2window3.drawItem();
-   
-  // Controlli per le azioni e i relativi draw del player
-  if (leftClickPressed) {
-    int delayAttack = 150;
-    player.draw(attack, 80);
-    if (timerRunning[9]) {
-      int elapsedTime = millis() - startTime[9];
-      if (elapsedTime >= delayAttack) {
-        attackSound.play();
-        leftClickPressed = false;
-        timerRunning[9] = false;
-      }
-    } else startTimer(9);
-  }
-  else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
-    int delaySound = 180;
-    player.draw(run, 60);
-    if (timerRunning[10]) {
-      int elapsedTime = millis() - startTime[10];
-      if (elapsedTime >= delaySound) {
-        walkSound.play();
-        timerRunning[10] = false;
-      }
-    } else startTimer(10);
-  }
-  else {
-    player.draw(idle, 100);
+  
+  // Draw elementi HUD e controlli se il player è vivo
+  heartBg.draw();
+  switch(life) {
+    case 1:
+      playerMovment();
+      heart.draw();
+      break;
+    case 2:
+      playerMovment();
+      heart.draw();
+      heart2.draw();
+      break;
+    case 3:
+      playerMovment();
+      heart.draw();
+      heart2.draw();
+      heart3.draw();
+      break;
+    default:
+      GameOver gameOver = new GameOver();
+      gameOver.show();
+      break;
   }
 }
 
