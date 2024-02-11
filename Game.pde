@@ -1,6 +1,5 @@
 /*
-video #10 0:00
-Riga 107 Items da mettere chiamata alla classe della ui della vittoria
+video #22 0:00
 */
 
 import java.awt.Rectangle;
@@ -58,9 +57,13 @@ void loadAnimations() {
   for (int i = 0; i < bombControls.length; i++) {
     bombControls[i] = true;
   }
+  // Caricamento immagini singole
   heartTexture = loadImage(heartPath);
   heartBgTexture = loadImage(heartBgPath);
   gameOverTexture = loadImage(gameOverPath);
+  winGameTexture = loadImage(winGamePath);
+  titleTexture = loadImage(titlePath);
+  kingDeadTexture = loadImage(kingDeadPath);
 }
 
 // Controlli per le azioni e i relativi draw del player
@@ -171,8 +174,8 @@ void explosionHandler(int index, int bombCounter, Items bomb) {
     }
 }
 
-void doorOpeningHandler(boolean doorOpening, int doorCounter, Items door) {    
-  if (!doorOpening) door.drawItem();
+void doorOpeningHandler(boolean isDoorOpening, int doorCounter, Items door, int index) {    
+  if (!isDoorOpening) door.drawItem();
   else {
       doorAnimation.x = door.x - worldX + screenX;
       doorAnimation.y = door.y - worldY + screenY;
@@ -181,7 +184,8 @@ void doorOpeningHandler(boolean doorOpening, int doorCounter, Items door) {
       if (timerRunning[doorCounter]) {
       int elapsedTime = millis() - startTime[doorCounter];
         if (elapsedTime >= doorOpeningDelay) {
-          doorOpening = false;
+          isDoorOpening = false;
+          doorOpening[index] = false;
           timerRunning[doorCounter] = false;
         }
       } else startTimer(doorCounter);
@@ -196,7 +200,7 @@ void setup () {
   windowTitle(GAME_TITLE);
   windowResizable(false);
   frameRate(FRAME_RATE);
-  background(0);
+  background(63,56,81);
   
   // Caricamento array per animazioni
   loadAnimations();
@@ -205,6 +209,7 @@ void setup () {
   backgroundMusic = new Sound(this, bgMusicPath);
   bossMusic = new Sound(this, bossMusicPath);
   endMusic = new Sound(this, endMusicPath);
+  winMusic = new Sound(this, winMusicPath);
   walkSound = new Sound(this, walkPath);
   attackSound = new Sound(this, attackPath);
   explosionSound = new Sound(this, explosionPath);
@@ -256,11 +261,14 @@ void setup () {
   heart2 = new SingleSprite(heartTexture, heartX + 22, heartY, 20, 20);
   heart3 = new SingleSprite(heartTexture, heartX + 22 * 2, heartY, 20, 20);
   heartBg = new SingleSprite(heartBgTexture, heartBgX, heartBgY, 132, 68);
-  gameOverImg = new SingleSprite(gameOverTexture, screenX - 150, screenY - 150, 300, 300); // DA CAMBIARE QUANDO CAMBIO IMMAGINE
+  gameOverImg = new SingleSprite(gameOverTexture, screenX - 150, screenY - 150, 300, 300);
+  winGameImg = new SingleSprite(winGameTexture, screenX - 50, screenY - 200, 300, 300);
+  titleImg = new SingleSprite(titleTexture, titleX, titleY, 234, 24);
+  kingDeadImg = new SingleSprite(kingDeadTexture, kingDeadX, kingDeadY, 84, 64);
 }
 
 void draw() {  
-  background(0);
+  background(63,56,81);
   // Movimento player e controllo collisioni
   player.update();
   
@@ -276,9 +284,9 @@ void draw() {
   explosionHandler(bombExplosion[5], 5, LVL2bomb4);
   
   // Animazioni door
-  doorOpeningHandler(doorOpening[0], 6, door);
-  doorOpeningHandler(doorOpening[1], 7, LVL1door);
-  doorOpeningHandler(doorOpening[2], 8, LVL2door);
+  doorOpeningHandler(doorOpening[0], 6, door, 0);
+  doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
+  doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
   
   // Draw Oggetti
   box.drawItem();
@@ -292,27 +300,32 @@ void draw() {
   LVL2window3.drawItem();
   
   // Draw elementi HUD e controlli se il player è vivo
-  heartBg.draw();
+  titleImg.draw(true);
+  kingDeadImg.draw(true);
+  heartBg.draw(false);
   switch(life) {
     case 1:
       playerMovment();
-      heart.draw();
+      heart.draw(false);
       break;
     case 2:
       playerMovment();
-      heart.draw();
-      heart2.draw();
+      heart.draw(false);
+      heart2.draw(false);
       break;
     case 3:
       playerMovment();
-      heart.draw();
-      heart2.draw();
-      heart3.draw();
+      heart.draw(false);
+      heart2.draw(false);
+      heart3.draw(false);
       break;
     default:
-      GameOver gameOver = new GameOver();
-      gameOver.show();
+      new GameOver();
       break;
+  }
+  
+  if (gameWon) {
+    winGameImg.draw(false);
   }
 }
 

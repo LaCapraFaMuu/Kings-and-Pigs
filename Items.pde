@@ -44,7 +44,6 @@ class Items {
         break;
       case 2:
         doorOpening[0] = true;
-        int doorOpeningDelay = 500;
         if (timerRunning[12]) {
           int elapsedTime = millis() - startTime[12];
           if (elapsedTime >= doorOpeningDelay) {
@@ -62,10 +61,9 @@ class Items {
         break;
      case 6:
         doorOpening[1] = true;
-        int LVL1doorOpeningDelay = 500;
         if (timerRunning[13]) {
           int elapsedTime = millis() - startTime[13];
-          if (elapsedTime >= LVL1doorOpeningDelay) {
+          if (elapsedTime >= doorOpeningDelay) {
             backgroundMusic.stop();
             bossMusic.loop();
             worldX = 5 * tileSize;
@@ -100,11 +98,10 @@ class Items {
         break;
       case 14:
         doorOpening[2] = true;
-        int LVL2doorOpeningDelay = 500;
         if (timerRunning[14]) {
-          int elapsedTime = millis() - startTime[13];
-          if (elapsedTime >= LVL2doorOpeningDelay) {
-            // Quello da fare per la porta
+          int elapsedTime = millis() - startTime[14];
+          if (elapsedTime >= doorOpeningDelay) {
+            new WinGame();
             timerRunning[14] = false;
           }
         } else startTimer(14);

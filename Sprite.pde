@@ -20,8 +20,9 @@ class Sprite {
   }
 
   // Draw per immagine singola
-  void draw() {
-    image(texture, x, y, width, height);
+  void draw(boolean isStatic) {
+    if (isStatic) image(texture, x - worldX + screenX, y - worldY + screenY, width, height);
+    else image(texture, x, y, width, height);
   }
   
   int lastFrameTime = 0;

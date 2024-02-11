@@ -2,21 +2,21 @@
 boolean singleAction = true;
 
 class GameOver {
-  void show() {
+  GameOver() {
     PImage lastFrameImg = loadImage("assets/player/dead/3.png");
     SingleSprite lastFrame = new SingleSprite(lastFrameImg, screenX, screenY, 128, 128);
     
     playerSpeed = 0; // Per bloccare il player
     bossMusic.stop();
     backgroundMusic.stop();
-    gameOverImg.draw(); 
+    gameOverImg.draw(false); 
     
     // If per eseguire le cose solo 1 volta
     if (singleAction) {
       endMusic.loop();
       player.draw(dead, 200);
     }
-    else lastFrame.draw();
+    else lastFrame.draw(false);
     // Avvio timer per far finire l'animazione del player
     if (timerRunning[15]) {
       int elapsedTime = millis() - startTime[15];
