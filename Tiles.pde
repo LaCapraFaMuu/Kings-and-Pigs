@@ -69,7 +69,6 @@ class Tiles extends Sprite {
           wldY - tileSize * 2 < worldY + screenY) {
          image(tiles[tileNum], x, y, width, height);
       }
-      
       worldCol++;
 
       if (worldCol == maxWorldCol) {

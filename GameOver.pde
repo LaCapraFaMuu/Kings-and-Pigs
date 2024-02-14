@@ -14,7 +14,7 @@ class GameOver {
     // If per eseguire le cose solo 1 volta
     if (singleAction) {
       endMusic.loop();
-      player.draw(dead, 200);
+      player.draw(dead, 200, false);
     }
     else lastFrame.draw(false);
     // Avvio timer per far finire l'animazione del player

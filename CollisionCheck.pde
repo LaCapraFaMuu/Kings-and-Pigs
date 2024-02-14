@@ -1,48 +1,75 @@
 class CollisionCheck {
   // Metodo per controllare collisioni con la mappa
-  void checkTile() {
-    int entityLeftWorldX = worldX + solidArea.x;
-    int entityRightWorldX = worldX + solidArea.x + solidArea.width;
-    int entityTopWorldY = worldY + solidArea.y;
-    int entityBottomWorldY = worldY + solidArea.y + solidArea.height; 
+  void checkTile(boolean isPlayer) {
+    int entityLeftWorldX;
+    int entityRightWorldX;
+    int entityTopWorldY;
+    int entityBottomWorldY; 
+    int tileNum1, tileNum2;
+    int speed;
+    String entityDirection;
+    
+    if (isPlayer) {
+      entityLeftWorldX = worldX + solidArea.x;
+      entityRightWorldX = worldX + solidArea.x + solidArea.width;
+      entityTopWorldY = worldY + solidArea.y;
+      entityBottomWorldY = worldY + solidArea.y + solidArea.height; 
+      speed = playerSpeed;
+      entityDirection = direction;
+    }
+    else {
+      entityLeftWorldX = kingPig.x + kingSolidArea.x;
+      entityRightWorldX =  kingPig.x + kingSolidArea.x + kingSolidArea.width;
+      entityTopWorldY =  kingPig.y + kingSolidArea.y;
+      entityBottomWorldY =  kingPig.y + kingSolidArea.y + kingSolidArea.height;
+      speed = kingSpeed;
+      entityDirection = kingDirection;
+    }
+    
     int entityLeftCol = entityLeftWorldX / tileSize;
     int entityRightCol = entityRightWorldX / tileSize;
     int entityTopRow = entityTopWorldY / tileSize;
     int entityBottomRow = entityBottomWorldY / tileSize;
-    int tileNum1, tileNum2;
     
-    switch(direction) {
+    switch(entityDirection) {
       case "Up":
-        entityTopRow = (entityTopWorldY - playerSpeed) / tileSize;
+        entityTopRow = (entityTopWorldY - speed) / tileSize;
         tileNum1 = mapTileNum[entityLeftCol][entityTopRow];
         tileNum2 = mapTileNum[entityRightCol][entityTopRow];
         if (collision[tileNum1] || collision[tileNum2]) {
-          collisionOn = true;
+          if (isPlayer) collisionOn = true;
+          else kingCollisionOn = true;
         }
         break;
       case "Down":
-        entityBottomRow = (entityBottomWorldY + playerSpeed) / tileSize;
+        entityBottomRow = (entityBottomWorldY + speed) / tileSize;
         tileNum1 = mapTileNum[entityLeftCol][entityBottomRow];
         tileNum2 = mapTileNum[entityRightCol][entityBottomRow];
         if (collision[tileNum1] || collision[tileNum2]) {
-          collisionOn = true;
+          if (isPlayer) collisionOn = true;
+          else kingCollisionOn = true;
         }
         break;
       case "Left":
-        entityLeftCol = (entityLeftWorldX - playerSpeed) / tileSize;
+        entityLeftCol = (entityLeftWorldX - speed) / tileSize;
         tileNum1 = mapTileNum[entityLeftCol][entityTopRow];
         tileNum2 = mapTileNum[entityLeftCol][entityBottomRow];
         if (collision[tileNum1] || collision[tileNum2]) {
-          collisionOn = true;
+          if (isPlayer) collisionOn = true;
+          else kingCollisionOn = true;
         }
         break;
       case "Right":
-        entityRightCol = (entityRightWorldX + playerSpeed) / tileSize;
+        entityRightCol = (entityRightWorldX + speed) / tileSize;
         tileNum1 = mapTileNum[entityRightCol][entityTopRow];
         tileNum2 = mapTileNum[entityRightCol][entityBottomRow];
         if (collision[tileNum1] || collision[tileNum2]) {
-          collisionOn = true;
+          if (isPlayer) collisionOn = true;
+          else kingCollisionOn = true;
         }
+        break;
+      case "Stop":
+        kingCollisionOn = true;
         break;
     }
   }
@@ -148,17 +175,6 @@ class CollisionCheck {
     return control;
   }
   
-  boolean checkAnimation(int i) {
-    boolean control = false;
-    if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
-      Rectangle explosionArea = new Rectangle(bombExplosionAnimationFrames.x, bombExplosionAnimationFrames.y, 170, 170);
-      Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
-      if (playerHitbox.intersects(explosionArea))
-          control = true;
-    }
-    return control;
-  }
-  
   // Metodo per controllare eventi con gli oggetti
   void checkObject() {
     for (int i = 0; i < totObj; i++) {
@@ -213,8 +229,17 @@ class CollisionCheck {
       }
       solidAreaX = solidAreaDefaultX;
       solidAreaY = solidAreaDefaultY;
-      solidObjAreaX[i] = solidObjDefaultAreaX[i];
-      solidObjAreaY[i] = solidObjDefaultAreaY[i];
     }
+  }
+  
+  boolean checkAnimation(int i) {
+    boolean control = false;
+    if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
+      Rectangle explosionArea = new Rectangle(bombExplosionAnimationFrames.x, bombExplosionAnimationFrames.y, 170, 170);
+      Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
+      if (playerHitbox.intersects(explosionArea))
+          control = true;
+    }
+    return control;
   }
 }

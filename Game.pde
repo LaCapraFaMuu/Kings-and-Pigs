@@ -6,11 +6,7 @@ import java.awt.Rectangle;
 
 
 String rndPath() {
-  int rnd = (int)random(2);
-  String windowPath;
-  if (rnd < 1) windowPath = "assets/objects/windows/Window1.png";
-  else windowPath = "assets/objects/windows/Window2.png";
-  return windowPath;
+  return "assets/objects/windows/Window" + ((int) random(2) + 1) + ".png";
 }
 
 void startTimer(int i) {
@@ -20,43 +16,20 @@ void startTimer(int i) {
 
 // Metodo per caricare immagini in un array
 void loadAnimations() {
-  for (int i = 0; i < idleFrameMax; i++) {
-    idle[i] = loadImage("assets/player/idle/" + i + ".png");
-  }
-  
-  for (int i = 0; i < runFrameMax; i++) {
-    run[i] = loadImage("assets/player/run/" + i + ".png");
-  }
-   
-  for (int i = 0; i < attackFrameMax; i++) {
-    attack[i] = loadImage("assets/player/attack/" + i + ".png");
-  }
-  
-  for (int i = 0; i < deadFrameMax; i++) {
-    dead[i] = loadImage("assets/player/dead/" + i + ".png");
-  }
-    
-  for (int i = 0; i < bombIgnitionFrames; i++) {
-    bombIgnitionAnimation[i] = loadImage("assets/objects/bomb/" + i + ".png");
-  }
-  
-  for (int i = 0; i < bombExplosionFrames; i++) {
-    bombExplosionAnimation[i] = loadImage("assets/objects/bomb/bombExplosion/" + i + ".png"); 
-  }
-  
-  for (int i = 0; i < doorOpeningFrames; i++) {
-    doorOpeningAnimation[i] = loadImage("assets/objects/door/" + i + ".png"); 
-  }
+  for (int i = 0; i < idleFrameMax; i++) idle[i] = loadImage("assets/player/idle/" + i + ".png");
+  for (int i = 0; i < runFrameMax; i++) run[i] = loadImage("assets/player/run/" + i + ".png");
+  for (int i = 0; i < attackFrameMax; i++) attack[i] = loadImage("assets/player/attack/" + i + ".png");
+  for (int i = 0; i < deadFrameMax; i++) dead[i] = loadImage("assets/player/dead/" + i + ".png"); 
+  for (int i = 0; i < bombIgnitionFrames; i++) bombIgnitionAnimation[i] = loadImage("assets/objects/bomb/" + i + ".png");
+  for (int i = 0; i < bombExplosionFrames; i++) bombExplosionAnimation[i] = loadImage("assets/objects/bomb/bombExplosion/" + i + ".png"); 
+  for (int i = 0; i < doorOpeningFrames; i++) doorOpeningAnimation[i] = loadImage("assets/objects/door/" + i + ".png"); 
+  for (int i = 0; i < kingIdleFrameMax; i++) kingIdle[i] = loadImage("assets/enemy/king/idle/" + i + ".png"); 
+  for (int i = 0; i < kingRunFrameMax; i++) kingRun[i] = loadImage("assets/enemy/king/run/" + i + ".png"); 
+  for (int i = 0; i < kingAttackFrameMax; i++) kingAttack[i] = loadImage("assets/enemy/king/attack/" + i + ".png"); 
   // Inizializzazzione per animazioni
-  for (int i = 0; i < doorOpening.length; i++) {
-    doorOpening[i] = false; 
-  }
-  for (int i = 0; i < bombExplosion.length; i++) {
-    bombExplosion[i] = 0;
-  }
-  for (int i = 0; i < bombControls.length; i++) {
-    bombControls[i] = true;
-  }
+  for (int i = 0; i < doorOpening.length; i++) doorOpening[i] = false; 
+  for (int i = 0; i < bombExplosion.length; i++) bombExplosion[i] = 0;
+  for (int i = 0; i < bombControls.length; i++) bombControls[i] = true;
   // Caricamento immagini singole
   heartTexture = loadImage(heartPath);
   heartBgTexture = loadImage(heartBgPath);
@@ -69,8 +42,8 @@ void loadAnimations() {
 // Controlli per le azioni e i relativi draw del player
 void playerMovment() {
   if (leftClickPressed) {
-    int delayAttack = 150;
-    player.draw(attack, 80);
+    int delayAttack = 250;
+    player.draw(attack, 80, false);
     if (timerRunning[9]) {
       int elapsedTime = millis() - startTime[9];
       if (elapsedTime >= delayAttack) {
@@ -82,7 +55,7 @@ void playerMovment() {
   }
   else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
     int delaySound = 180;
-    player.draw(run, 60);
+    player.draw(run, 60, false);
     if (timerRunning[10]) {
       int elapsedTime = millis() - startTime[10];
       if (elapsedTime >= delaySound) {
@@ -92,7 +65,7 @@ void playerMovment() {
     } else startTimer(10);
   }
   else {
-    player.draw(idle, 100);
+    player.draw(idle, 100, false);
   } 
 }
 
@@ -126,7 +99,7 @@ void explosionHandler(int index, int bombCounter, Items bomb) {
         case 1:
             bombAnimation.x = bomb.x - worldX + screenX;
             bombAnimation.y = bomb.y - worldY + screenY;
-            bombAnimation.draw(bombIgnitionAnimation, bombIgniteDelay);
+            bombAnimation.draw(bombIgnitionAnimation, bombIgniteDelay, false);
             if (timerRunning[bombCounter]) {
                 int elapsedTime = millis() - startTime[bombCounter];
                 if (elapsedTime >= bombStartTime) {
@@ -138,7 +111,7 @@ void explosionHandler(int index, int bombCounter, Items bomb) {
         case 2:
             bombExplosionAnimationFrames.x = bomb.x - worldX + screenX;
             bombExplosionAnimationFrames.y = bomb.y - worldY + screenY;
-            bombExplosionAnimationFrames.draw(bombExplosionAnimation, bombExplosionDelay);
+            bombExplosionAnimationFrames.draw(bombExplosionAnimation, bombExplosionDelay, false);
             switch(bombCounter) {
               case 0:
                 bombCollisionIndex = 0;
@@ -179,7 +152,7 @@ void doorOpeningHandler(boolean isDoorOpening, int doorCounter, Items door, int 
   else {
       doorAnimation.x = door.x - worldX + screenX;
       doorAnimation.y = door.y - worldY + screenY;
-      doorAnimation.draw(doorOpeningAnimation, 150); 
+      doorAnimation.draw(doorOpeningAnimation, 150, false); 
       int doorOpeningDelay = 505;
       if (timerRunning[doorCounter]) {
       int elapsedTime = millis() - startTime[doorCounter];
@@ -256,6 +229,11 @@ void setup () {
   player.x = screenX;
   player.y = screenY;
   
+  // Creazione enemy
+  kingPig = new KingPig(kingIdle, 70, 70);
+  kingPig.x = 11 * tileSize;
+  kingPig.y = 17 * tileSize;
+  
   // Creazione HUD
   heart = new SingleSprite(heartTexture, heartX, heartY, 20, 20);
   heart2 = new SingleSprite(heartTexture, heartX + 22, heartY, 20, 20);
@@ -274,7 +252,6 @@ void draw() {
   
   // Draw mappa
   tile.displayTiles();
-
   // Animazioni bomb
   explosionHandler(bombExplosion[0], 0, bomb);
   explosionHandler(bombExplosion[1], 1, LVL1bomb);
@@ -298,6 +275,9 @@ void draw() {
   LVL2window.drawItem();
   LVL2window2.drawItem();
   LVL2window3.drawItem();
+  
+  // Update enemy
+  kingPig.update();
   
   // Draw elementi HUD e controlli se il player è vivo
   titleImg.draw(true);

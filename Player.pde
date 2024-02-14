@@ -17,7 +17,7 @@ class Player extends Sprite {
   
   void keyPressed(char key) {
     if (key == keyUp) {
-      keyUpPressed = true; 
+      keyUpPressed = true;
       direction = "Up";
     }
     if (key == keyDown) {
@@ -62,9 +62,8 @@ class Player extends Sprite {
   void update() {
     // Controllo collisione
     collisionOn = false;
-    cCheck.checkTile();
+    cCheck.checkTile(true);
     cCheck.checkObject();
-    
     // Movimento player
     if (keyUpPressed && !collisionOn) {
       worldY -= playerSpeed;

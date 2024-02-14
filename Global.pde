@@ -40,7 +40,7 @@ int mapTileNum[][];
 boolean[] collision;
 
 // Variabili per timer
-final int totTimers = 16; // 11 Timer in questo file dall'ordine dall'alto al basso e altri 3 in items e 1 in gameOver
+final int totTimers = 17; // 11 Timer nel main | 3 in items | 1 gameOver | 1 KingPig
 final int[] startTime = new int[totTimers];
 final boolean[] timerRunning = new boolean[totTimers];
 
@@ -66,8 +66,6 @@ final int kingDeadY =  27 * tileSize - 15;
 Player player;
 int playerSpeed = 5;
 int life = 3;
-final int playerX = 400;
-final int playerY = 150;
 boolean collisionOn = false;
 int solidAreaX = 35;
 int solidAreaY = 55;
@@ -88,6 +86,24 @@ final PImage[] run = new PImage[runFrameMax];
 final PImage[] attack = new PImage[attackFrameMax];
 final PImage[] dead = new PImage[deadFrameMax];
 
+// Variabili KingPig
+KingPig kingPig;
+Rectangle kingSolidArea;
+int kingSolidAreaX = 24;
+int kingSolidAreaY = 14;
+int kingSolidAreaWidth = 36;
+int kingSolidAreaHeight = 46;
+boolean kingCollisionOn;
+int kingLife = 4;
+final int kingSpeed = 3;
+String kingDirection = "Stop";
+final int kingIdleFrameMax = 12;
+final int kingRunFrameMax = 6;
+final int kingAttackFrameMax = 5;
+final PImage[] kingIdle = new PImage[kingIdleFrameMax];
+final PImage[] kingRun = new PImage[kingRunFrameMax];
+final PImage[] kingAttack = new PImage[kingAttackFrameMax];
+
 // Variabili per collisioni
 Rectangle solidArea;
 CollisionCheck cCheck = new CollisionCheck();
@@ -104,13 +120,10 @@ boolean[] doorOpening = new boolean[3];
 
 // Variabili oggetti
 final int totObj = 18;
-Rectangle[] itemSolidArea = new Rectangle[totObj];
 boolean[] collisionObj = new boolean[totObj];
 boolean[] interactable = new boolean[totObj];
 int[] solidObjAreaX = new int[totObj];
 int[] solidObjAreaY = new int[totObj];
-int[] solidObjDefaultAreaX = new int[totObj];
-int[] solidObjDefaultAreaY = new int[totObj];
 int[] solidObjWidth = new int[totObj];
 int[] solidObjHeight = new int[totObj];
 int ItemCreationCounter = 0;

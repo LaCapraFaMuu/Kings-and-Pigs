@@ -26,14 +26,15 @@ class Sprite {
   }
   
   int lastFrameTime = 0;
-  void draw(PImage[] array, int delay) {
+  void draw(PImage[] array, int delay, boolean isStatic) {
     if (array.length > 0) {
       if (millis() - lastFrameTime > delay) {
         currentFrame = (currentFrame + 1) % array.length;
         lastFrameTime = millis();
       }
       if (currentFrame >= 0 && currentFrame < array.length) {
-        image(array[currentFrame], x, y, width, height);
+        if (isStatic) image(array[currentFrame], x - worldX + screenX, y - worldY + screenY, width, height);
+        else image(array[currentFrame], x, y, width, height);
       }
     }
   }

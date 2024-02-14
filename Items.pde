@@ -14,11 +14,8 @@ class Items {
     interactable[ItemCreationCounter] = interactableObj;
     solidObjAreaX[ItemCreationCounter] = x - worldX + screenX;
     solidObjAreaY[ItemCreationCounter] = y - worldY + screenY;
-    solidObjDefaultAreaX[ItemCreationCounter] = solidObjAreaX[ItemCreationCounter];
-    solidObjDefaultAreaY[ItemCreationCounter] = solidObjAreaY[ItemCreationCounter];
     solidObjWidth[ItemCreationCounter] = width;
     solidObjHeight[ItemCreationCounter] = height;
-    itemSolidArea[ItemCreationCounter] = new Rectangle(solidObjAreaX[ItemCreationCounter], solidObjAreaY[ItemCreationCounter], solidObjWidth[ItemCreationCounter],  solidObjHeight[ItemCreationCounter]);
     ItemCreationCounter++;
   }
   
