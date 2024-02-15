@@ -185,9 +185,16 @@ class CollisionCheck {
     if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
       Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x, bombExplosionAnimationObj.y, 170, 170);
       Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
-      if (playerHitbox.intersects(explosionArea))
-          control = true;
+      if (playerHitbox.intersects(explosionArea)) control = true;
     }
     return control;
+  }
+  
+  boolean checkEnemy() {
+   boolean control = false;
+   Rectangle playerHitbox = new Rectangle(worldX + 40, worldY, solidAreaWidth, solidAreaHeight);
+   Rectangle kingPigHitbox = new Rectangle(kingPig.x - 40, kingPig.y - 30, 70, 30);
+   if (playerHitbox.intersects(kingPigHitbox))  control = true;
+   return control;
   }
 }

@@ -1,5 +1,7 @@
 class KingPig extends Sprite {
   boolean isMoving = false;
+  int invincibleCounter = 0;
+  int deathCounter = 0;
   
   KingPig(PImage[] animation, int width, int height) {
     super(animation, width, height);
@@ -23,46 +25,70 @@ class KingPig extends Sprite {
   }
   
   void update() {
-    randomDirection();
-    // Controllo collisione
-    kingCollisionOn = false;
-    cCheck.checkTile(false);
-
-    // Movimento enemy    
-    switch (kingDirection) {
-      case "Up":
-        if (kingDirection.equals("Up") && !kingCollisionOn) {
-          kingPig.y -= kingSpeed;
-          isMoving = true;
+    if (kingLife > 0) {
+      randomDirection();
+      // Controllo collisione
+      kingCollisionOn = false;
+      cCheck.checkTile(false);
+      // Controllo se sono a contatto con il nemico
+      
+      if (cCheck.checkEnemy() && leftClickPressed) { 
+        if (!isKingPigInvincible) {
+          kingLife--;
+          isKingPigInvincible = true;
         }
-        break;
-      case "Down":
-        if (!kingCollisionOn) {
-          kingPig.y += kingSpeed;
-          isMoving = true;
+      }
+      // Tempo di immunita
+      if (isKingPigInvincible) {
+        invincibleCounter++;
+        if (invincibleCounter > 30) {
+          isKingPigInvincible = false;
+          invincibleCounter = 0;
         }
-        break;
-      case "Left" :
-        if (!kingCollisionOn) {
-          kingPig.x -= kingSpeed;
-          isMoving = true;
-        }
-        break;
-      case "Right" :
-        if (!kingCollisionOn) {
-          kingPig.x += kingSpeed;
-          isMoving = true;
-        }
-        break;
-      case "Stop" :
-        if (!kingCollisionOn) {
-          isMoving = false;
-        }
-        break;
+      }
+  
+      // Movimento enemy    
+      switch (kingDirection) {
+        case "Up":
+          if (kingDirection.equals("Up") && !kingCollisionOn) {
+            kingPig.y -= kingSpeed;
+            isMoving = true;
+          }
+          break;
+        case "Down":
+          if (!kingCollisionOn) {
+            kingPig.y += kingSpeed;
+            isMoving = true;
+          }
+          break;
+        case "Left" :
+          if (!kingCollisionOn) {
+            kingPig.x -= kingSpeed;
+            isMoving = true;
+          }
+          break;
+        case "Right" :
+          if (!kingCollisionOn) {
+            kingPig.x += kingSpeed;
+            isMoving = true;
+          }
+          break;
+        case "Stop" :
+          if (!kingCollisionOn) {
+            isMoving = false;
+          }
+          break;
+      }
     }
-    
     // Draw enemy
-    if (isMoving && !kingCollisionOn) {
+    if (kingLife <= 0) {
+      deathCounter++;
+      if (deathCounter < 15) kingPig.draw(kingDead, 200, true);
+    }
+    else if (cCheck.checkEnemy()) {
+      kingPig.draw(kingAttack, 150, true);
+    }
+    else if (isMoving && !kingCollisionOn) {
       kingPig.draw(kingRun, 100, true);
     }
     else kingPig.draw(kingIdle, 100, true);

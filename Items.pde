@@ -27,6 +27,7 @@ class Items extends Sprite {
         if (timerRunning[12]) {
           int elapsedTime = millis() - startTime[12];
           if (elapsedTime >= doorOpeningDelay) {
+            currentLVL++;
             worldX = 23 * tileSize;
             worldY = 8 * tileSize;
             timerRunning[12] = false;
@@ -44,6 +45,7 @@ class Items extends Sprite {
         if (timerRunning[13]) {
           int elapsedTime = millis() - startTime[13];
           if (elapsedTime >= doorOpeningDelay) {
+            currentLVL++;
             backgroundMusic.stop();
             bossMusic.loop();
             worldX = 5 * tileSize;
@@ -77,14 +79,17 @@ class Items extends Sprite {
         }
         break;
       case 14:
-        doorOpening[2] = true;
-        if (timerRunning[14]) {
-          int elapsedTime = millis() - startTime[14];
-          if (elapsedTime >= doorOpeningDelay) {
-            new WinGame();
-            timerRunning[14] = false;
-          }
-        } else startTimer(14);
+        if (kingLife <= 0) {
+          doorOpening[2] = true;
+          if (timerRunning[14]) {
+            int elapsedTime = millis() - startTime[14];
+            if (elapsedTime >= doorOpeningDelay) {
+              currentLVL++;
+              new WinGame();
+              timerRunning[14] = false;
+            }
+          } else startTimer(14);
+        }
         break; 
       default:
         for (int j = 0; j < bombControls.length; j++) {

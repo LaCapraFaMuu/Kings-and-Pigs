@@ -13,7 +13,6 @@ class DoorAnimation extends Sprite {
         if (timerRunning[doorCounter]) {
         int elapsedTime = millis() - startTime[doorCounter];
           if (elapsedTime >= doorOpeningDelay) {
-            currentLVL++;
             isDoorOpening = false;
             doorOpening[index] = false;
             timerRunning[doorCounter] = false;

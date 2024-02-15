@@ -52,7 +52,7 @@ final String heartBgPath = "assets/hud/LiveBar.png";
 final String gameOverPath = "assets/hud/GameOver.png";
 final String winGamePath = "assets/hud/WinGame.png";
 final String titlePath = "assets/KingsAndPigs.png";
-final String kingDeadPath = "assets/enemy/king/dead.png";
+final String kingDeadPath = "assets/enemy/dead.png";
 PImage heartTexture, heartBgTexture, gameOverTexture, winGameTexture, titleTexture, kingDeadTexture;
 final int heartX = 43;
 final int heartY = 34;
@@ -67,6 +67,7 @@ final int kingDeadY =  27 * tileSize - 15;
 Player player;
 int playerSpeed = 5;
 int life = 3;
+boolean isPlayerInvincible = false;
 int currentLVL = 0;
 String direction = "Up";
 // Variabili per collisioni
@@ -93,8 +94,9 @@ final PImage[] dead = new PImage[deadFrameMax];
 
 // ------ Variabili KingPig ------
 KingPig kingPig;
-int kingLife = 4;
+int kingLife = 3;
 final int kingSpeed = 3;
+boolean isKingPigInvincible = false;
 String kingDirection = "Stop";
 // Variabili per collisioni
 boolean kingCollisionOn;
@@ -106,9 +108,11 @@ int kingSolidAreaHeight = 46;
 final int kingIdleFrameMax = 12;
 final int kingRunFrameMax = 6;
 final int kingAttackFrameMax = 5;
+final int kingDeadFrameMax = 4;
 final PImage[] kingIdle = new PImage[kingIdleFrameMax];
 final PImage[] kingRun = new PImage[kingRunFrameMax];
 final PImage[] kingAttack = new PImage[kingAttackFrameMax];
+final PImage[] kingDead = new PImage[kingDeadFrameMax];
 
 // ------ Variabili per animazioni items ------
 BombAnimation bombAnimation;

@@ -15,9 +15,10 @@ void loadAnimations() {
   for (int i = 0; i < bombIgnitionFrames; i++) bombIgnitionAnimation[i] = loadImage("assets/objects/bomb/" + i + ".png");
   for (int i = 0; i < bombExplosionFrames; i++) bombExplosionAnimation[i] = loadImage("assets/objects/bomb/bombExplosion/" + i + ".png"); 
   for (int i = 0; i < doorOpeningFrames; i++) doorOpeningAnimation[i] = loadImage("assets/objects/door/" + i + ".png"); 
-  for (int i = 0; i < kingIdleFrameMax; i++) kingIdle[i] = loadImage("assets/enemy/king/idle/" + i + ".png"); 
-  for (int i = 0; i < kingRunFrameMax; i++) kingRun[i] = loadImage("assets/enemy/king/run/" + i + ".png"); 
-  for (int i = 0; i < kingAttackFrameMax; i++) kingAttack[i] = loadImage("assets/enemy/king/attack/" + i + ".png"); 
+  for (int i = 0; i < kingIdleFrameMax; i++) kingIdle[i] = loadImage("assets/enemy/idle/" + i + ".png"); 
+  for (int i = 0; i < kingRunFrameMax; i++) kingRun[i] = loadImage("assets/enemy/run/" + i + ".png"); 
+  for (int i = 0; i < kingAttackFrameMax; i++) kingAttack[i] = loadImage("assets/enemy/attack/" + i + ".png"); 
+  for (int i = 0; i < kingDeadFrameMax; i++) kingDead[i] = loadImage("assets/enemy/dead/" + i + ".png"); 
   // Inizializzazzione per animazioni
   for (int i = 0; i < doorOpening.length; i++) doorOpening[i] = false; 
   for (int i = 0; i < bombExplosion.length; i++) bombExplosion[i] = 0;

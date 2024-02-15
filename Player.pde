@@ -1,4 +1,6 @@
 class Player extends Sprite {
+  int invincibleCounter = 0;
+  
   Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
     super(animation, width, height);
     keyUp = up;
@@ -92,6 +94,25 @@ class Player extends Sprite {
     collisionOn = false;
     cCheck.checkTile(true);
     cCheck.checkObject();
+    // Controllo se sono a contatto con il nemico
+    if (kingLife > 0) {
+      if (cCheck.checkEnemy()) { 
+        if (!isPlayerInvincible) {
+          life--;
+          attackSound.play();
+          isPlayerInvincible = true;
+        }
+      }
+      // Tempo di immunita
+      if (isPlayerInvincible) {
+        invincibleCounter++;
+        if (invincibleCounter > 60) {
+          isPlayerInvincible = false;
+          invincibleCounter = 0;
+        }
+      }
+    }
+    
     // Movimento player
     if (keyUpPressed && !collisionOn) {
       worldY -= playerSpeed;
