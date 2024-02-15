@@ -26,6 +26,7 @@ class Sprite {
     else image(texture, x, y, width, height);
   }
   
+  // Draw per animazioni
   void draw(PImage[] array, int delay, boolean isStatic) {
     if (array.length > 0) {
       if (millis() - lastFrameTime > delay) {

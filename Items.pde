@@ -13,7 +13,7 @@ class Items extends Sprite {
     ItemCreationCounter++;
   }
   
-  // Metodo per logica delle interazioni con gli oggetti
+  // Metodo per logica delle interazioni tra player e oggetti
   void objInteraction(int i) {
     switch(i) {
       case 0:

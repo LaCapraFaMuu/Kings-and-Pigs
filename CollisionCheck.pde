@@ -1,31 +1,15 @@
 class CollisionCheck {
   // Metodo per controllare collisioni con la mappa
   void checkTile(boolean isPlayer) {
-    int entityLeftWorldX;
-    int entityRightWorldX;
-    int entityTopWorldY;
-    int entityBottomWorldY; 
+    // If nella definizione delle variabili
+    int entityLeftWorldX = isPlayer ? worldX + solidAreaX : kingPig.x + kingSolidAreaX;
+    int entityRightWorldX = isPlayer ? worldX + solidAreaX + solidAreaWidth : kingPig.x + kingSolidAreaX + kingSolidAreaWidth;
+    int entityTopWorldY = isPlayer ? worldY + solidAreaY : kingPig.y + kingSolidAreaY;
+    int entityBottomWorldY = isPlayer ? worldY + solidAreaY + solidAreaHeight : kingPig.y + kingSolidAreaY + kingSolidAreaHeight;
+    int speed = isPlayer ? playerSpeed : kingSpeed;
+    String entityDirection = isPlayer ? direction : kingDirection;
+    
     int tileNum1, tileNum2;
-    int speed;
-    String entityDirection;
-    
-    if (isPlayer) {
-      entityLeftWorldX = worldX + solidAreaX;
-      entityRightWorldX = worldX + solidAreaX + solidAreaWidth;
-      entityTopWorldY = worldY + solidAreaY;
-      entityBottomWorldY = worldY + solidAreaY + solidAreaHeight; 
-      speed = playerSpeed;
-      entityDirection = direction;
-    }
-    else {
-      entityLeftWorldX = kingPig.x + kingSolidAreaX;
-      entityRightWorldX =  kingPig.x + kingSolidAreaX + kingSolidAreaWidth;
-      entityTopWorldY =  kingPig.y + kingSolidAreaY;
-      entityBottomWorldY =  kingPig.y + kingSolidAreaY + kingSolidAreaHeight;
-      speed = kingSpeed;
-      entityDirection = kingDirection;
-    }
-    
     int entityLeftCol = entityLeftWorldX / tileSize;
     int entityRightCol = entityRightWorldX / tileSize;
     int entityTopRow = entityTopWorldY / tileSize;
@@ -195,6 +179,7 @@ class CollisionCheck {
     }
   }
   
+  // Metodo per controllare la collisione di un Item durante un'animazione
   boolean checkAnimation(int i) {
     boolean control = false;
     if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {

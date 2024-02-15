@@ -1,7 +1,6 @@
 // ------ Variabili gioco ------
 final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 30;
-int currentLVL = 0;
 CollisionCheck cCheck = new CollisionCheck();
 
 // ------ Variabili sounds ------
@@ -68,6 +67,7 @@ final int kingDeadY =  27 * tileSize - 15;
 Player player;
 int playerSpeed = 5;
 int life = 3;
+int currentLVL = 0;
 String direction = "Up";
 // Variabili per collisioni
 boolean collisionOn = false;

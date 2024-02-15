@@ -5,6 +5,7 @@ class KingPig extends Sprite {
     super(animation, width, height);
   }
   
+  // Metodo che decide una direzione a caso
   void randomDirection() {
     int delay = 2000;
     if (timerRunning[16]) {

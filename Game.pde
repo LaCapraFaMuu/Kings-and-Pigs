@@ -1,9 +1,6 @@
 import java.awt.Rectangle; //<>//
 
-String rndPath() {
-  return "assets/objects/windows/Window" + ((int) random(2) + 1) + ".png";
-}
-
+// Metodo per iniziare un nuovo timer
 void startTimer(int i) {
   startTime[i] = millis();
   timerRunning[i] = true;
@@ -29,7 +26,7 @@ void loadAnimations() {
   bombTexture = loadImage(bombPath);
   boxTexture = loadImage(boxPath);
   doorTexture = loadImage(doorPath);
-  windowTexture = loadImage(rndPath());
+  windowTexture = loadImage("assets/objects/windows/Window" + ((int) random(2) + 1) + ".png");
   heartTexture = loadImage(heartPath);
   heartBgTexture = loadImage(heartBgPath);
   gameOverTexture = loadImage(gameOverPath);
@@ -152,7 +149,7 @@ void draw() {
       kingPig.update(); // Update dell'enemy
       break;
     case 3:
-      if (gameWon) winGameImg.draw(false);
+      winGameImg.draw(false);
       break;
   }
   

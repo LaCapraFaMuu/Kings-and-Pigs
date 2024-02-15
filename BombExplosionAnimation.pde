@@ -3,6 +3,7 @@ class BombExplosionAnimation extends Sprite {
     super(animation, width, height); 
   }
   
+  // Metodo per gestire l'animazione della bomb
   void explosionHandler(int index, int bombCounter, Items bomb) {
     int bombStartTime = 1000;
     int bombExplosionTime = 200;
@@ -60,5 +61,5 @@ class BombExplosionAnimation extends Sprite {
         default:
             break;
     }
-}
+  }
 }
