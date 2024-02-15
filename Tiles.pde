@@ -11,30 +11,21 @@ class Tiles extends Sprite {
   void loadMap() {
     try {
       String[] lines = loadStrings("assets/mapData.txt");
-      
       if (lines != null) {
         int row = 0;
-  
         for (String line : lines) {
           String[] numbers = splitTokens(line);
-          
           for (int col = 0; col < maxWorldCol && col < numbers.length; col++) {
             int num = Integer.parseInt(numbers[col]);
             mapTileNum[col][row] = num;
           }
           row++;
-          
-          if (row >= maxWorldRow) {
-            break;
-          }
+          if (row >= maxWorldRow) break;
         }
-      } else {
-        System.out.println("File mapData.txt non trovato.");
-      }
-  
+      } else System.out.println("File mapData.txt non trovato.");
     } catch (NumberFormatException e) {
-      System.out.println("Errore nella conversione del numero.");
-    }
+        System.out.println("Errore nella conversione del numero.");
+      }
   }
 
   // Metodo per caricare immagini dentro l'array
@@ -56,7 +47,6 @@ class Tiles extends Sprite {
     int worldRow = 0;
     while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
       int tileNum = mapTileNum[worldCol][worldRow];
-      
       int wldX = worldCol * tileSize;
       int wldY = worldRow * tileSize;
       int x = wldX - worldX + screenX;
@@ -64,9 +54,9 @@ class Tiles extends Sprite {
       
       // If per ottimizzazione, non genera tiles che il player non vede
       if (wldX + tileSize > worldX - screenX &&
-          wldX - tileSize * 2 < worldX + screenX &&
+          wldX - tileSize * 1.5 < worldX + screenX &&
           wldY + tileSize > worldY - screenY &&
-          wldY - tileSize * 2 < worldY + screenY) {
+          wldY - tileSize < worldY + screenY) {
          image(tiles[tileNum], x, y, width, height);
       }
       worldCol++;

@@ -3,7 +3,6 @@ class KingPig extends Sprite {
   
   KingPig(PImage[] animation, int width, int height) {
     super(animation, width, height);
-    kingSolidArea = new Rectangle(kingSolidAreaX, kingSolidAreaY, kingSolidAreaWidth, kingSolidAreaHeight);
   }
   
   void randomDirection() {

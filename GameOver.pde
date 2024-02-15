@@ -1,5 +1,4 @@
-// Variabile fuori altrimenti ogni volta che creo la classe dentro il draw la variabile verrebbe re-inizializzata
-boolean singleAction = true;
+boolean singleAction = true; // Variabile fuori altrimenti ogni volta che creo la classe dentro il draw la variabile verrebbe re-inizializzata
 
 class GameOver {
   GameOver() {

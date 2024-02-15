@@ -1,14 +1,8 @@
-class Items {
-  int x, y, width, height;
-  PImage item;
+class Items extends Sprite {
   int currentFrame = 0;
   
-  Items(String path, int x, int y, int width, int height, boolean collision, boolean interactableObj) {
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    item = loadImage(path);
+  Items(PImage texture, int x, int y, int width, int height, boolean collision, boolean interactableObj) {
+     super(texture, x, y, width, height);
     // Assegnazione variabili per collisione oggetti
     collisionObj[ItemCreationCounter] = collision;
     interactable[ItemCreationCounter] = interactableObj;
@@ -17,17 +11,6 @@ class Items {
     solidObjWidth[ItemCreationCounter] = width;
     solidObjHeight[ItemCreationCounter] = height;
     ItemCreationCounter++;
-  }
-  
-  void drawItem() {
-    int X = x - worldX + screenX;
-    int Y = y - worldY + screenY;
-    if (x + tileSize > worldX - screenX &&
-        x - tileSize < worldX + screenX &&
-        y + tileSize > worldY - screenY &&
-        y - tileSize < worldY + screenY) {
-        image(item, X, Y, width, height);
-    }
   }
   
   // Metodo per logica delle interazioni con gli oggetti

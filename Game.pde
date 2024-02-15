@@ -1,9 +1,4 @@
-/*
-video #22 0:00
-*/
-
-import java.awt.Rectangle;
-
+import java.awt.Rectangle; //<>//
 
 String rndPath() {
   return "assets/objects/windows/Window" + ((int) random(2) + 1) + ".png";
@@ -31,138 +26,16 @@ void loadAnimations() {
   for (int i = 0; i < bombExplosion.length; i++) bombExplosion[i] = 0;
   for (int i = 0; i < bombControls.length; i++) bombControls[i] = true;
   // Caricamento immagini singole
+  bombTexture = loadImage(bombPath);
+  boxTexture = loadImage(boxPath);
+  doorTexture = loadImage(doorPath);
+  windowTexture = loadImage(rndPath());
   heartTexture = loadImage(heartPath);
   heartBgTexture = loadImage(heartBgPath);
   gameOverTexture = loadImage(gameOverPath);
   winGameTexture = loadImage(winGamePath);
   titleTexture = loadImage(titlePath);
   kingDeadTexture = loadImage(kingDeadPath);
-}
-
-// Controlli per le azioni e i relativi draw del player
-void playerMovment() {
-  if (leftClickPressed) {
-    int delayAttack = 250;
-    player.draw(attack, 80, false);
-    if (timerRunning[9]) {
-      int elapsedTime = millis() - startTime[9];
-      if (elapsedTime >= delayAttack) {
-        attackSound.play();
-        leftClickPressed = false;
-        timerRunning[9] = false;
-      }
-    } else startTimer(9);
-  }
-  else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
-    int delaySound = 180;
-    player.draw(run, 60, false);
-    if (timerRunning[10]) {
-      int elapsedTime = millis() - startTime[10];
-      if (elapsedTime >= delaySound) {
-        walkSound.play();
-        timerRunning[10] = false;
-      }
-    } else startTimer(10);
-  }
-  else {
-    player.draw(idle, 100, false);
-  } 
-}
-
-void explosionHandler(int index, int bombCounter, Items bomb) {
-    int bombStartTime = 1000;
-    int bombExplosionTime = 200;
-    int bombCollisionIndex = 0; // Variabile da passare per controllare la collisione
-    switch(index) {
-        case 0:
-            switch(bombCounter) {
-                case 0:
-                  bomb.drawItem();
-                  break;
-                case 1:
-                  LVL1bomb.drawItem();
-                  break;
-                case 2:
-                  LVL2bomb.drawItem();
-                  break;
-                case 3:
-                  LVL2bomb2.drawItem();
-                  break;
-                case 4:
-                  LVL2bomb3.drawItem();
-                  break;
-                case 5:
-                  LVL2bomb4.drawItem();
-                  break;
-            }
-            break;
-        case 1:
-            bombAnimation.x = bomb.x - worldX + screenX;
-            bombAnimation.y = bomb.y - worldY + screenY;
-            bombAnimation.draw(bombIgnitionAnimation, bombIgniteDelay, false);
-            if (timerRunning[bombCounter]) {
-                int elapsedTime = millis() - startTime[bombCounter];
-                if (elapsedTime >= bombStartTime) {
-                bombExplosion[bombCounter]++;
-                timerRunning[bombCounter] = false;
-                }
-            } else startTimer(bombCounter);
-            break;
-        case 2:
-            bombExplosionAnimationFrames.x = bomb.x - worldX + screenX;
-            bombExplosionAnimationFrames.y = bomb.y - worldY + screenY;
-            bombExplosionAnimationFrames.draw(bombExplosionAnimation, bombExplosionDelay, false);
-            switch(bombCounter) {
-              case 0:
-                bombCollisionIndex = 0;
-                break;
-              case 1:
-                bombCollisionIndex = 4;
-                break;
-              case 2:
-                bombCollisionIndex = 9;
-                break;
-              case 3:
-                bombCollisionIndex = 10;
-                break;
-              case 4:
-                bombCollisionIndex = 11;
-                break;
-              case 5:
-                bombCollisionIndex = 12;
-                break; 
-            }
-            if (timerRunning[bombCounter]) {
-                int elapsedTime = millis() - startTime[bombCounter];
-                if (elapsedTime >= bombExplosionTime) {
-                  if (cCheck.checkAnimation(bombCollisionIndex)) life--;
-                  explosionSound.play();
-                  bombExplosion[bombCounter]++;
-                  timerRunning[bombCounter] = false;
-                }
-            } else startTimer(bombCounter);
-            break; 
-        default:
-            break;
-    }
-}
-
-void doorOpeningHandler(boolean isDoorOpening, int doorCounter, Items door, int index) {    
-  if (!isDoorOpening) door.drawItem();
-  else {
-      doorAnimation.x = door.x - worldX + screenX;
-      doorAnimation.y = door.y - worldY + screenY;
-      doorAnimation.draw(doorOpeningAnimation, 150, false); 
-      int doorOpeningDelay = 505;
-      if (timerRunning[doorCounter]) {
-      int elapsedTime = millis() - startTime[doorCounter];
-        if (elapsedTime >= doorOpeningDelay) {
-          isDoorOpening = false;
-          doorOpening[index] = false;
-          timerRunning[doorCounter] = false;
-        }
-      } else startTimer(doorCounter);
-  }
 }
 
 void settings() {
@@ -193,26 +66,26 @@ void setup () {
   tile.loadTiles();
   
   // Creazione oggetti (Primo true/false per dire se hanno hitbox o no | Secondo true/false per dire se hanno interazioni o no)
-  bomb = new Items(bombImg, bombX, bombY, 128, 128, false, true);
-  box = new Items(boxImg, boxX, boxY, 48, 42, true, false);
-  door = new Items(doorImg, doorX, doorY, 100, 110, false, true);
-  window = new Items(rndPath(), windowX, windowY, 120, 120, false, false);
+  bomb = new Items(bombTexture, bombX, bombY, 128, 128, false, true);
+  box = new Items(boxTexture, boxX, boxY, 48, 42, true, false);
+  door = new Items(doorTexture, doorX, doorY, 100, 110, false, true);
+  window = new Items(windowTexture, windowX, windowY, 120, 120, false, false);
   // Oggetti livello 1
-  LVL1bomb = new Items(bombImg, LVL1bombX, LVL1bombY, 128, 128, false, true);
-  LVL1box = new Items(boxImg, LVL1boxX, LVL1boxY, 48, 42, true, false);
-  LVL1door = new Items(doorImg, LVL1doorX, LVL1doorY, 100, 110, false, true); //<>//
-  LVL1window = new Items(rndPath(), LVL1windowX, LVL1windowY, 120, 120, false, false);
-  LVL1window2 = new Items(rndPath(), LVL1windowX2, LVL1windowY2, 120, 120, false, false);
+  LVL1bomb = new Items(bombTexture, LVL1bombX, LVL1bombY, 128, 128, false, true);
+  LVL1box = new Items(boxTexture, LVL1boxX, LVL1boxY, 48, 42, true, false);
+  LVL1door = new Items(doorTexture, LVL1doorX, LVL1doorY, 100, 110, false, true); //<>//
+  LVL1window = new Items(windowTexture, LVL1windowX, LVL1windowY, 120, 120, false, false);
+  LVL1window2 = new Items(windowTexture, LVL1windowX2, LVL1windowY2, 120, 120, false, false);
   // Oggetti livello 2
-  LVL2bomb = new Items(bombImg, LVL2bombX, LVL2bombY, 128, 128, false, true);
-  LVL2bomb2 = new Items(bombImg, LVL2bombX2, LVL2bombY2, 128, 128, false, true);
-  LVL2bomb3 = new Items(bombImg, LVL2bombX3, LVL2bombY3, 128, 128, false, true);
-  LVL2bomb4 = new Items(bombImg, LVL2bombX4, LVL2bombY4, 128, 128, false, true);
-  LVL2box = new Items(boxImg, LVL2boxX, LVL2boxY, 48, 42, true, false);
-  LVL2door = new Items(doorImg, LVL2doorX, LVL2doorY, 100, 110, false, true);
-  LVL2window = new Items(rndPath(), LVL2windowX, LVL2windowY, 120, 120, false, false);
-  LVL2window2 = new Items(rndPath(), LVL2windowX2, LVL2windowY2, 120, 120, false, false);
-  LVL2window3 = new Items(rndPath(), LVL2windowX3, LVL2windowY3, 120, 120, false, false);
+  LVL2bomb = new Items(bombTexture, LVL2bombX, LVL2bombY, 128, 128, false, true);
+  LVL2bomb2 = new Items(bombTexture, LVL2bombX2, LVL2bombY2, 128, 128, false, true);
+  LVL2bomb3 = new Items(bombTexture, LVL2bombX3, LVL2bombY3, 128, 128, false, true);
+  LVL2bomb4 = new Items(bombTexture, LVL2bombX4, LVL2bombY4, 128, 128, false, true);
+  LVL2box = new Items(boxTexture, LVL2boxX, LVL2boxY, 48, 42, true, false);
+  LVL2door = new Items(doorTexture, LVL2doorX, LVL2doorY, 100, 110, false, true);
+  LVL2window = new Items(windowTexture, LVL2windowX, LVL2windowY, 120, 120, false, false);
+  LVL2window2 = new Items(windowTexture, LVL2windowX2, LVL2windowY2, 120, 120, false, false);
+  LVL2window3 = new Items(windowTexture, LVL2windowX3, LVL2windowY3, 120, 120, false, false);
   
   // Caricamento array item
   items[0] = bomb; items[1] = box; items[2] = door; items[3] = window;
@@ -221,7 +94,7 @@ void setup () {
   
   // Creazione animazioni
   bombAnimation = new BombAnimation(bombIgnitionAnimation, 128, 128);
-  bombExplosionAnimationFrames = new BombExplosionAnimation(bombExplosionAnimation, 128, 128);
+  bombExplosionAnimationObj = new BombExplosionAnimation(bombExplosionAnimation, 128, 128);
   doorAnimation = new DoorAnimation(doorOpeningAnimation, 100, 110); 
 
   // Creazione player
@@ -247,37 +120,41 @@ void setup () {
 
 void draw() {  
   background(63,56,81);
-  // Movimento player e controllo collisioni
+  // Update del player
   player.update();
-  
   // Draw mappa
   tile.displayTiles();
-  // Animazioni bomb
-  explosionHandler(bombExplosion[0], 0, bomb);
-  explosionHandler(bombExplosion[1], 1, LVL1bomb);
-  explosionHandler(bombExplosion[2], 2, LVL2bomb);
-  explosionHandler(bombExplosion[3], 3, LVL2bomb2);
-  explosionHandler(bombExplosion[4], 4, LVL2bomb3);
-  explosionHandler(bombExplosion[5], 5, LVL2bomb4);
   
-  // Animazioni door
-  doorOpeningHandler(doorOpening[0], 6, door, 0);
-  doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
-  doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
-  
-  // Draw Oggetti
-  box.drawItem();
-  window.drawItem();
-  LVL1box.drawItem();
-  LVL1window.drawItem();
-  LVL1window2.drawItem();
-  LVL2box.drawItem();
-  LVL2window.drawItem();
-  LVL2window2.drawItem();
-  LVL2window3.drawItem();
-  
-  // Update enemy
-  kingPig.update();
+  switch(currentLVL) {
+    case 0:
+      box.draw(true);
+      window.draw(true);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[0], 0, bomb);
+      doorAnimation.doorOpeningHandler(doorOpening[0], 6, door, 0);
+      break;
+    case 1:
+      LVL1box.draw(true);
+      LVL1window.draw(true);
+      LVL1window2.draw(true);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[1], 1, LVL1bomb);
+      doorAnimation.doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
+      break;
+    case 2:
+      LVL2box.draw(true);
+      LVL2window.draw(true);
+      LVL2window2.draw(true);
+      LVL2window3.draw(true);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[2], 2, LVL2bomb);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[3], 3, LVL2bomb2);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[4], 4, LVL2bomb3);
+      bombExplosionAnimationObj.explosionHandler(bombExplosion[5], 5, LVL2bomb4);
+      doorAnimation.doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
+      kingPig.update(); // Update dell'enemy
+      break;
+    case 3:
+      if (gameWon) winGameImg.draw(false);
+      break;
+  }
   
   // Draw elementi HUD e controlli se il player è vivo
   titleImg.draw(true);
@@ -285,16 +162,16 @@ void draw() {
   heartBg.draw(false);
   switch(life) {
     case 1:
-      playerMovment();
+      player.movment();
       heart.draw(false);
       break;
     case 2:
-      playerMovment();
+      player.movment();
       heart.draw(false);
       heart2.draw(false);
       break;
     case 3:
-      playerMovment();
+      player.movment();
       heart.draw(false);
       heart2.draw(false);
       heart3.draw(false);
@@ -302,10 +179,6 @@ void draw() {
     default:
       new GameOver();
       break;
-  }
-  
-  if (gameWon) {
-    winGameImg.draw(false);
   }
 }
 

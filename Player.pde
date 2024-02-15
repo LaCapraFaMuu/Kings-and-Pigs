@@ -11,8 +11,36 @@ class Player extends Sprite {
     keyLeftPressed = false;
     keyRightPressed = false;
     leftClickPressed = false;
-    // Creazione hitbox player
-    solidArea = new Rectangle(solidAreaX, solidAreaY, solidAreaWidth, solidAreaHeight);
+  }
+  
+  // Controlli per le azioni e i relativi draw del player
+  void movment() {
+    if (leftClickPressed) {
+      int delayAttack = 250;
+      player.draw(attack, 80, false);
+      if (timerRunning[9]) {
+        int elapsedTime = millis() - startTime[9];
+        if (elapsedTime >= delayAttack) {
+          attackSound.play();
+          leftClickPressed = false;
+          timerRunning[9] = false;
+        }
+      } else startTimer(9);
+    }
+    else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
+      int delaySound = 180;
+      player.draw(run, 60, false);
+      if (timerRunning[10]) {
+        int elapsedTime = millis() - startTime[10];
+        if (elapsedTime >= delaySound) {
+          walkSound.play();
+          timerRunning[10] = false;
+        }
+      } else startTimer(10);
+    }
+    else {
+      player.draw(idle, 100, false);
+    } 
   }
   
   void keyPressed(char key) {

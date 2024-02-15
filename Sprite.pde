@@ -1,5 +1,6 @@
 class Sprite {
   int currentFrame = 0;
+  int lastFrameTime = 0;
   PImage texture;
   PImage[] animation;
   int width, height, x, y;
@@ -25,7 +26,6 @@ class Sprite {
     else image(texture, x, y, width, height);
   }
   
-  int lastFrameTime = 0;
   void draw(PImage[] array, int delay, boolean isStatic) {
     if (array.length > 0) {
       if (millis() - lastFrameTime > delay) {
