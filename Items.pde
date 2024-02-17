@@ -1,6 +1,4 @@
 class Items extends Sprite {
-  int currentFrame = 0;
-  
   Items(PImage texture, int x, int y, int width, int height, boolean collision, boolean interactableObj) {
      super(texture, x, y, width, height);
     // Assegnazione variabili per collisione oggetti
@@ -89,11 +87,6 @@ class Items extends Sprite {
               timerRunning[14] = false;
             }
           } else startTimer(14);
-        }
-        break; 
-      default:
-        for (int j = 0; j < bombControls.length; j++) {
-          bombControls[j] = false;
         }
         break;
     }

@@ -126,6 +126,10 @@ class CollisionCheck {
          itemX = LVL2doorX;
          itemY = LVL2doorY;
          break;
+       case 18:
+         itemX = cannonX;
+         itemY = cannonY;
+         break;
       }
       
       switch (direction) {
@@ -182,9 +186,9 @@ class CollisionCheck {
   // Metodo per controllare la collisione di un Item durante un'animazione
   boolean checkAnimation(int i) {
     boolean control = false;
+    Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
     if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
-      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x, bombExplosionAnimationObj.y, 170, 170);
-      Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
+      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x - 50, bombExplosionAnimationObj.y - 50, 100, 100);
       if (playerHitbox.intersects(explosionArea)) control = true;
     }
     return control;

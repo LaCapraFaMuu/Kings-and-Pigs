@@ -24,9 +24,13 @@ void loadAnimations() {
   for (int i = 0; i < bombExplosion.length; i++) bombExplosion[i] = 0;
   for (int i = 0; i < bombControls.length; i++) bombControls[i] = true;
   // Caricamento immagini singole
+  backgroundTexture = loadImage(bgPath);
+  playButtonTexture = loadImage(playPath);
+  quitButtonTexture = loadImage(quitPath);
   bombTexture = loadImage(bombPath);
   boxTexture = loadImage(boxPath);
   doorTexture = loadImage(doorPath);
+  cannonTexture = loadImage(cannonPath);
   windowTexture = loadImage("assets/objects/windows/Window" + ((int) random(2) + 1) + ".png");
   heartTexture = loadImage(heartPath);
   heartBgTexture = loadImage(heartBgPath);
@@ -57,6 +61,7 @@ void setup () {
   walkSound = new Sound(this, walkPath);
   attackSound = new Sound(this, attackPath);
   explosionSound = new Sound(this, explosionPath);
+  buttonClick = new Sound(this, buttonClickPath);
   backgroundMusic.loop();
    
   // Creazione sfondo
@@ -84,9 +89,10 @@ void setup () {
   LVL2window = new Items(windowTexture, LVL2windowX, LVL2windowY, 120, 120, false, false);
   LVL2window2 = new Items(windowTexture, LVL2windowX2, LVL2windowY2, 120, 120, false, false);
   LVL2window3 = new Items(windowTexture, LVL2windowX3, LVL2windowY3, 120, 120, false, false);
+  cannon = new Items(cannonTexture, cannonX, cannonY, 88, 56, false, false);
   
   // Caricamento array item
-  items[0] = bomb; items[1] = box; items[2] = door; items[3] = window;
+  items[0] = bomb; items[1] = box; items[2] = door; items[3] = window; items[18] = cannon;
   items[4] = LVL1bomb; items[5] = LVL1box; items[6] = LVL1door; items[7] = LVL1window; items[8] = LVL1window2;
   items[9] = LVL2bomb; items[10] = LVL2bomb2; items[11] = LVL2bomb3; items[12] = LVL2bomb4; items[13] = LVL2box; items[14] = LVL2door;
   
@@ -106,10 +112,18 @@ void setup () {
   kingPig.y = 17 * tileSize;
   
   // Creazione HUD
+  background = new SingleSprite(backgroundTexture, 0, 0, screenWidth, screenHeight);
+  playButton = new SingleSprite(playButtonTexture, buttonX, buttonY, 150, 80);
+  quitButton = new SingleSprite(quitButtonTexture, buttonX, buttonY + 100, 150, 80);
+  mainTitle = new SingleSprite(titleTexture, screenWidth / 2 - 140, 100, 280, 30);
   heart = new SingleSprite(heartTexture, heartX, heartY, 20, 20);
   heart2 = new SingleSprite(heartTexture, heartX + 22, heartY, 20, 20);
   heart3 = new SingleSprite(heartTexture, heartX + 22 * 2, heartY, 20, 20);
+  kingHeart = new SingleSprite(heartTexture, kingHeartX, kingHeartY, 20, 20);
+  kingHeart2 = new SingleSprite(heartTexture, kingHeartX - 22, kingHeartY, 20, 20);
+  kingHeart3 = new SingleSprite(heartTexture, kingHeartX - 44, kingHeartY, 20, 20);
   heartBg = new SingleSprite(heartBgTexture, heartBgX, heartBgY, 132, 68);
+  kingHeartBg = new SingleSprite(heartBgTexture, kingHeartBgX, kingHeartBgY, 132, 68);
   gameOverImg = new SingleSprite(gameOverTexture, screenX - 150, screenY - 150, 300, 300);
   winGameImg = new SingleSprite(winGameTexture, screenX - 50, screenY - 200, 300, 300);
   titleImg = new SingleSprite(titleTexture, titleX, titleY, 234, 24);
@@ -117,66 +131,94 @@ void setup () {
 }
 
 void draw() {  
-  background(63,56,81);
-  // Update del player
-  player.update();
-  // Draw mappa
-  tile.displayTiles();
-  
-  switch(currentLVL) {
-    case 0:
-      box.draw(true);
-      window.draw(true);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[0], 0, bomb);
-      doorAnimation.doorOpeningHandler(doorOpening[0], 6, door, 0);
-      break;
-    case 1:
-      LVL1box.draw(true);
-      LVL1window.draw(true);
-      LVL1window2.draw(true);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[1], 1, LVL1bomb);
-      doorAnimation.doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
-      break;
-    case 2:
-      LVL2box.draw(true);
-      LVL2window.draw(true);
-      LVL2window2.draw(true);
-      LVL2window3.draw(true);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[2], 2, LVL2bomb);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[3], 3, LVL2bomb2);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[4], 4, LVL2bomb3);
-      bombExplosionAnimationObj.explosionHandler(bombExplosion[5], 5, LVL2bomb4);
-      doorAnimation.doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
-      kingPig.update(); // Update dell'enemy
-      break;
-    case 3:
-      winGameImg.draw(false);
-      break;
+  if (!startGame) {
+    background.draw(false);
+    rect(screenWidth/2 - 200, 0, 400, screenHeight);
+    fill(63,56,81);
+    mainTitle.draw(false);
+    playButton.draw(false);
+    quitButton.draw(false);
   }
+  else {
+    background(63,56,81);
+    // Update del player
+    player.update();
+    // Draw mappa
+    tile.displayTiles();
+    
+    switch(currentLVL) {
+      case 0:
+        box.draw(true);
+        window.draw(true);
+        cannon.draw(true);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[0], 0, bomb);
+        doorAnimation.doorOpeningHandler(doorOpening[0], 6, door, 0);
+        break;
+      case 1:
+        LVL1box.draw(true);
+        LVL1window.draw(true);
+        LVL1window2.draw(true);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[1], 1, LVL1bomb);
+        doorAnimation.doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
+        break;
+      case 2:
+        LVL2box.draw(true);
+        LVL2window.draw(true);
+        LVL2window2.draw(true);
+        LVL2window3.draw(true);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[2], 2, LVL2bomb);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[3], 3, LVL2bomb2);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[4], 4, LVL2bomb3);
+        bombExplosionAnimationObj.explosionHandler(bombExplosion[5], 5, LVL2bomb4);
+        doorAnimation.doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
+        kingPig.update(); // Update dell'enemy
+        if (kingLife > 0) {
+          kingHeartBg.draw(false);
+          switch (kingLife) {
+            case 1:
+              kingHeart.draw(false);
+              break;
+            case 2:
+              kingHeart.draw(false);
+              kingHeart2.draw(false);
+              break;
+            case 3:
+              kingHeart.draw(false);
+              kingHeart2.draw(false);
+              kingHeart3.draw(false);
+              break;
+          }
+        }
+        break;
+      case 3:
+        winGameImg.draw(false);
+        break;
+    }
   
-  // Draw elementi HUD e controlli se il player è vivo
-  titleImg.draw(true);
-  kingDeadImg.draw(true);
-  heartBg.draw(false);
-  switch(life) {
-    case 1:
-      player.movment();
-      heart.draw(false);
-      break;
-    case 2:
-      player.movment();
-      heart.draw(false);
-      heart2.draw(false);
-      break;
-    case 3:
-      player.movment();
-      heart.draw(false);
-      heart2.draw(false);
-      heart3.draw(false);
-      break;
-    default:
-      new GameOver();
-      break;
+    // Draw elementi HUD e controlli se il player è vivo
+    titleImg.draw(true);
+    kingDeadImg.draw(true);
+    heartBg.draw(false);
+    switch(life) {
+      case 1:
+        player.movment();
+        heart.draw(false);
+        break;
+      case 2:
+        player.movment();
+        heart.draw(false);
+        heart2.draw(false);
+        break;
+      case 3:
+        player.movment();
+        heart.draw(false);
+        heart2.draw(false);
+        heart3.draw(false);
+        break;
+      default:
+        new GameOver();
+        break;
+    }
   }
 }
 
@@ -190,4 +232,19 @@ void keyReleased() {
 
 void mouseClicked(){
   player.mouseClicked();
+}
+
+void mousePressed() {
+  if (!startGame) {
+    if (mouseX > buttonX && mouseY > buttonY &&
+        mouseX < buttonX + 150 && mouseY < buttonY + 80) {
+        buttonClick.play();
+        startGame = true;
+    }
+    else if (mouseX > buttonX && mouseY > buttonY + 100 &&
+             mouseX < buttonX + 250 && mouseY < buttonY + 180) {
+      buttonClick.play();
+      exit();
+    }
+  }
 }

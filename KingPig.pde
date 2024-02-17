@@ -9,11 +9,11 @@ class KingPig extends Sprite {
   
   // Metodo che decide una direzione a caso
   void randomDirection() {
-    int delay = 2000;
+    int delay = 1500;
     if (timerRunning[16]) {
       int elapsedTime = millis() - startTime[16];
       if (elapsedTime >= delay) {
-        int i = int(random(130));
+        int i = int(random(125));
         if (i <= 25) kingDirection = "Up";
         else if (i > 25 && i <= 50) kingDirection = "Down";
         else if (i > 50 && i <= 75) kingDirection = "Left";
@@ -32,7 +32,7 @@ class KingPig extends Sprite {
       cCheck.checkTile(false);
       // Controllo se sono a contatto con il nemico
       
-      if (cCheck.checkEnemy() && leftClickPressed) { 
+      if (cCheck.checkEnemy() && leftClickPressed && life > 0) { 
         if (!isKingPigInvincible) {
           kingLife--;
           isKingPigInvincible = true;
