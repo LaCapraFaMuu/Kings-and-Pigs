@@ -96,8 +96,9 @@ class Player extends Sprite {
     cCheck.checkObject();
     // Controllo se sono a contatto con il nemico
     if (kingLife > 0) {
-      if (cCheck.checkEnemy()) { 
+      if (cCheck.checkEnemy() && life > 0) { 
         if (!isPlayerInvincible) {
+          hitSound.play();
           life--;
           attackSound.play();
           isPlayerInvincible = true;

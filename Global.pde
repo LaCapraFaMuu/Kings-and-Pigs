@@ -5,13 +5,15 @@ boolean startGame = false;
 CollisionCheck cCheck = new CollisionCheck();
 
 // ------ Variabili sounds ------
-Sound backgroundMusic, bossMusic, walkSound, attackSound, explosionSound, endMusic, winMusic, buttonClick;
+Sound backgroundMusic, bossMusic, menuMusic, walkSound, attackSound, hitSound, explosionSound, endMusic, winMusic, buttonClick;
 final String bgMusicPath = "assets/sounds/music/Goblins_Den_(Regular).wav";
 final String bossMusicPath = "assets/sounds/music/Goblins_Dance_(Battle).wav";
+final String menuMusicPath = "assets/sounds/music/menuMusic.wav";
 final String endMusicPath = "assets/sounds/music/endMusic.wav";
 final String winMusicPath = "assets/sounds/music/winMusic.wav";
 final String walkPath = "assets/sounds/effects/walk.wav";
 final String attackPath = "assets/sounds/effects/attack.wav";
+final String hitPath = "assets/sounds/effects/hit.wav";
 final String explosionPath = "assets/sounds/effects/explosion.wav";
 final String buttonClickPath = "assets/sounds/effects/buttonClick.wav";
 

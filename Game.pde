@@ -56,13 +56,15 @@ void setup () {
   // Creazione audio
   backgroundMusic = new Sound(this, bgMusicPath);
   bossMusic = new Sound(this, bossMusicPath);
+  menuMusic = new Sound(this, menuMusicPath);
   endMusic = new Sound(this, endMusicPath);
   winMusic = new Sound(this, winMusicPath);
   walkSound = new Sound(this, walkPath);
   attackSound = new Sound(this, attackPath);
+  hitSound = new Sound(this, hitPath);
   explosionSound = new Sound(this, explosionPath);
   buttonClick = new Sound(this, buttonClickPath);
-  backgroundMusic.loop();
+  menuMusic.loop();
    
   // Creazione sfondo
   tile = new Tiles(tiles, tileSize, tileSize);
@@ -239,6 +241,8 @@ void mousePressed() {
     if (mouseX > buttonX && mouseY > buttonY &&
         mouseX < buttonX + 150 && mouseY < buttonY + 80) {
         buttonClick.play();
+        menuMusic.stop();
+        backgroundMusic.loop();
         startGame = true;
     }
     else if (mouseX > buttonX && mouseY > buttonY + 100 &&

@@ -51,7 +51,10 @@ class BombExplosionAnimation extends Sprite {
             if (timerRunning[bombCounter]) {
                 int elapsedTime = millis() - startTime[bombCounter];
                 if (elapsedTime >= bombExplosionTime) {
-                  if (cCheck.checkAnimation(bombCollisionIndex)) life--;
+                  if (cCheck.checkAnimation(bombCollisionIndex)) {
+                    hitSound.play();
+                    life--;
+                  }
                   explosionSound.play();
                   bombExplosion[bombCounter]++;
                   timerRunning[bombCounter] = false;

@@ -34,6 +34,7 @@ class KingPig extends Sprite {
       
       if (cCheck.checkEnemy() && leftClickPressed && life > 0) { 
         if (!isKingPigInvincible) {
+          hitSound.play();
           kingLife--;
           isKingPigInvincible = true;
         }

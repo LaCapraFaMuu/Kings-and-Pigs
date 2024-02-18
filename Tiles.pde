@@ -33,10 +33,10 @@ class Tiles extends Sprite {
     for (int i = 1; i < 94; i++) { // 94 Immagini tot in tiles
       tiles[i] = loadImage("assets/tiles/" + i + ".png"); 
       if (i <= 47) { // 47 perche num delle tile che devono avere collisioni
-      collision[i] = true;  
+        collision[i] = true;  
       }
       else {
-      collision[i] = false; 
+        collision[i] = false; 
       }
     }
   }
