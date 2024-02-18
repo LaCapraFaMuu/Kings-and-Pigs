@@ -5,7 +5,7 @@ Timer singleActionTimer = new Timer(400);
 class GameOver {
   GameOver() {
     PImage lastFrameImg = loadImage("assets/player/dead/3.png");
-    SingleSprite lastFrame = new SingleSprite(lastFrameImg, screenX, screenY, 128, 128);
+    Sprite lastFrame = new Sprite(lastFrameImg, screenX, screenY, 128, 128);
     
     playerSpeed = 0; // Per bloccare il player
     bossMusic.stop();

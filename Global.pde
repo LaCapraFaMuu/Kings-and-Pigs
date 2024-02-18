@@ -35,7 +35,7 @@ int mapTileNum[][];
 boolean[] collision;
 
 // ------ Variabili HUD ------
-SingleSprite heart, heart2, heart3, heartBg, kingHeart, kingHeart2, kingHeart3, kingHeartBg,  gameOverImg, winGameImg, titleImg, kingDeadImg, playButton, quitButton, mainTitle, background;
+Sprite heart, heart2, heart3, heartBg, kingHeart, kingHeart2, kingHeart3, kingHeartBg,  gameOverImg, winGameImg, titleImg, kingDeadImg, playButton, quitButton, mainTitle, background;
 PImage heartTexture, heartBgTexture, gameOverTexture, winGameTexture, titleTexture, kingDeadTexture, playButtonTexture, quitButtonTexture, backgroundTexture;
 final int buttonX = screenWidth / 2 - 75;
 final int buttonY = screenHeight / 2;

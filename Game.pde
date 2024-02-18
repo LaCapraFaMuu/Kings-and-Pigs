@@ -108,22 +108,22 @@ void setup () {
   kingPig.y = 17 * tileSize;
   
   // Creazione HUD
-  background = new SingleSprite(backgroundTexture, 0, 0, screenWidth, screenHeight);
-  playButton = new SingleSprite(playButtonTexture, buttonX, buttonY, 150, 80);
-  quitButton = new SingleSprite(quitButtonTexture, buttonX, buttonY + 100, 150, 80);
-  mainTitle = new SingleSprite(titleTexture, screenWidth / 2 - 140, 100, 280, 30);
-  heart = new SingleSprite(heartTexture, heartX, heartY, 20, 20);
-  heart2 = new SingleSprite(heartTexture, heartX + 22, heartY, 20, 20);
-  heart3 = new SingleSprite(heartTexture, heartX + 22 * 2, heartY, 20, 20);
-  kingHeart = new SingleSprite(heartTexture, kingHeartX, kingHeartY, 20, 20);
-  kingHeart2 = new SingleSprite(heartTexture, kingHeartX - 22, kingHeartY, 20, 20);
-  kingHeart3 = new SingleSprite(heartTexture, kingHeartX - 44, kingHeartY, 20, 20);
-  heartBg = new SingleSprite(heartBgTexture, heartBgX, heartBgY, 132, 68);
-  kingHeartBg = new SingleSprite(heartBgTexture, kingHeartBgX, kingHeartBgY, 132, 68);
-  gameOverImg = new SingleSprite(gameOverTexture, screenX - 150, screenY - 150, 300, 300);
-  winGameImg = new SingleSprite(winGameTexture, screenX - 50, screenY - 200, 300, 300);
-  titleImg = new SingleSprite(titleTexture, titleX, titleY, 234, 24);
-  kingDeadImg = new SingleSprite(kingDeadTexture, kingDeadX, kingDeadY, 84, 64);
+  background = new Sprite(backgroundTexture, 0, 0, screenWidth, screenHeight);
+  playButton = new Sprite(playButtonTexture, buttonX, buttonY, 150, 80);
+  quitButton = new Sprite(quitButtonTexture, buttonX, buttonY + 100, 150, 80);
+  mainTitle = new Sprite(titleTexture, screenWidth / 2 - 140, 100, 280, 30);
+  heart = new Sprite(heartTexture, heartX, heartY, 20, 20);
+  heart2 = new Sprite(heartTexture, heartX + 22, heartY, 20, 20);
+  heart3 = new Sprite(heartTexture, heartX + 22 * 2, heartY, 20, 20);
+  kingHeart = new Sprite(heartTexture, kingHeartX, kingHeartY, 20, 20);
+  kingHeart2 = new Sprite(heartTexture, kingHeartX - 22, kingHeartY, 20, 20);
+  kingHeart3 = new Sprite(heartTexture, kingHeartX - 44, kingHeartY, 20, 20);
+  heartBg = new Sprite(heartBgTexture, heartBgX, heartBgY, 132, 68);
+  kingHeartBg = new Sprite(heartBgTexture, kingHeartBgX, kingHeartBgY, 132, 68);
+  gameOverImg = new Sprite(gameOverTexture, screenX - 100, screenY - 200, 300, 300);
+  winGameImg = new Sprite(winGameTexture, screenX - 50, screenY - 200, 300, 300);
+  titleImg = new Sprite(titleTexture, titleX, titleY, 234, 24);
+  kingDeadImg = new Sprite(kingDeadTexture, kingDeadX, kingDeadY, 84, 64);
 }
 
 void draw() {  

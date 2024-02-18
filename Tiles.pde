@@ -1,5 +1,4 @@
 class Tiles extends Sprite {
-  
   Tiles(PImage[] tiles, int width, int height) {
     super(tiles, width, height);
     mapTileNum = new int[maxWorldCol][maxWorldRow];
@@ -23,9 +22,10 @@ class Tiles extends Sprite {
           if (row >= maxWorldRow) break;
         }
       } else System.out.println("File mapData.txt non trovato.");
-    } catch (NumberFormatException e) {
-        System.out.println("Errore nella conversione del numero.");
-      }
+    }
+    catch (NumberFormatException e) {
+      System.out.println("Errore nella conversione del numero.");
+    }
   }
 
   // Metodo per caricare immagini dentro l'array

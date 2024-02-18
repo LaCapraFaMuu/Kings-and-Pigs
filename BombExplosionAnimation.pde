@@ -26,7 +26,7 @@ class BombExplosionAnimation extends Sprite {
         case 2:
             bombExplosionAnimationObj.x = bomb.x - worldX + screenX;
             bombExplosionAnimationObj.y = bomb.y - worldY + screenY;
-            bombExplosionAnimationObj.draw(bombExplosionAnimation, 60, false);
+            bombExplosionAnimationObj.draw(bombExplosionAnimation, 65, false);
             switch(bombCounter) {
               case 0:
                 bombCollisionIndex = 0;

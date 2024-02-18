@@ -9,12 +9,6 @@ class Player extends Sprite {
     keyDown = down;
     keyLeft = left;
     keyRight = right;
-    // Inizializzazione variabili movimento a false
-    keyUpPressed = false;
-    keyDownPressed = false;
-    keyLeftPressed = false;
-    keyRightPressed = false;
-    leftClickPressed = false;
   }
   
   // Controlli per le azioni e i relativi draw del player
