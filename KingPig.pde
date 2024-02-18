@@ -1,4 +1,5 @@
 class KingPig extends Sprite {
+  Timer directionTimer = new Timer(1500);
   boolean isMoving = false;
   int invincibleCounter = 0;
   int deathCounter = 0;
@@ -9,19 +10,16 @@ class KingPig extends Sprite {
   
   // Metodo che decide una direzione a caso
   void randomDirection() {
-    int delay = 1500;
-    if (timerRunning[16]) {
-      int elapsedTime = millis() - startTime[16];
-      if (elapsedTime >= delay) {
-        int i = int(random(125));
-        if (i <= 25) kingDirection = "Up";
-        else if (i > 25 && i <= 50) kingDirection = "Down";
-        else if (i > 50 && i <= 75) kingDirection = "Left";
-        else if (i > 75 && i <= 100) kingDirection = "Right";
-        else kingDirection = "Stop";
-        timerRunning[16] = false;
-      }
-    } else startTimer(16); 
+    directionTimer.update();
+    if (directionTimer.tick()) {
+      int i = int(random(125));
+      if (i <= 25) kingDirection = "Up";
+      else if (i > 25 && i <= 50) kingDirection = "Down";
+      else if (i > 50 && i <= 75) kingDirection = "Left";
+      else if (i > 75 && i <= 100) kingDirection = "Right";
+      else kingDirection = "Stop";
+      directionTimer.reset();
+    }
   }
   
   void update() {

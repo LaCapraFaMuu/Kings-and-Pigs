@@ -1,6 +1,8 @@
 class Items extends Sprite {
+  Timer doorOpeningTimer = new Timer(505);
+  
   Items(PImage texture, int x, int y, int width, int height, boolean collision, boolean interactableObj) {
-     super(texture, x, y, width, height);
+    super(texture, x, y, width, height);
     // Assegnazione variabili per collisione oggetti
     collisionObj[ItemCreationCounter] = collision;
     interactable[ItemCreationCounter] = interactableObj;
@@ -22,15 +24,13 @@ class Items extends Sprite {
         break;
       case 2:
         doorOpening[0] = true;
-        if (timerRunning[12]) {
-          int elapsedTime = millis() - startTime[12];
-          if (elapsedTime >= doorOpeningDelay) {
-            currentLVL++;
-            worldX = 23 * tileSize;
-            worldY = 8 * tileSize;
-            timerRunning[12] = false;
-          }
-        } else startTimer(12);
+        doorOpeningTimer.update();
+        if (doorOpeningTimer.tick()) {
+          currentLVL++;
+          worldX = 23 * tileSize;
+          worldY = 8 * tileSize;
+          doorOpeningTimer.reset();
+        }
         break; 
       case 4:
         if (bombControls[1]) {
@@ -40,17 +40,15 @@ class Items extends Sprite {
         break;
      case 6:
         doorOpening[1] = true;
-        if (timerRunning[13]) {
-          int elapsedTime = millis() - startTime[13];
-          if (elapsedTime >= doorOpeningDelay) {
-            currentLVL++;
-            backgroundMusic.stop();
-            bossMusic.loop();
-            worldX = 5 * tileSize;
-            worldY = 15 * tileSize;
-            timerRunning[13] = false;
-          }
-        } else startTimer(13);
+        doorOpeningTimer.update();
+        if (doorOpeningTimer.tick()) {
+          currentLVL++;
+          backgroundMusic.stop();
+          bossMusic.loop();
+          worldX = 5 * tileSize;
+          worldY = 15 * tileSize;
+          doorOpeningTimer.reset();
+        }
         break; 
       case 9:
         if (bombControls[2]) {
@@ -79,14 +77,12 @@ class Items extends Sprite {
       case 14:
         if (kingLife <= 0) {
           doorOpening[2] = true;
-          if (timerRunning[14]) {
-            int elapsedTime = millis() - startTime[14];
-            if (elapsedTime >= doorOpeningDelay) {
-              currentLVL++;
-              new WinGame();
-              timerRunning[14] = false;
-            }
-          } else startTimer(14);
+          doorOpeningTimer.update();
+          if (doorOpeningTimer.tick()) {
+            currentLVL++;
+            new WinGame();
+            doorOpeningTimer.reset();
+          }
         }
         break;
     }

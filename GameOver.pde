@@ -1,4 +1,6 @@
-boolean singleAction = true; // Variabile fuori altrimenti ogni volta che creo la classe dentro il draw la variabile verrebbe re-inizializzata
+// Variabili fuori altrimenti ogni volta che creo la classe dentro il draw la variabile verrebbe re-inizializzata
+boolean singleAction = true;
+Timer singleActionTimer = new Timer(400);
 
 class GameOver {
   GameOver() {
@@ -17,14 +19,10 @@ class GameOver {
     }
     else lastFrame.draw(false);
     // Avvio timer per far finire l'animazione del player
-    if (timerRunning[15]) {
-      int elapsedTime = millis() - startTime[15];
-      if (elapsedTime >= 500) {
-        singleAction = false;
-        timerRunning[15] = false;
-      }
-    } else {
-      startTimer(15);
+    singleActionTimer.update();
+    if (singleActionTimer.tick()) {
+      singleAction = false;
+      singleActionTimer.reset();
     }
   }
 }

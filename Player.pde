@@ -1,4 +1,6 @@
 class Player extends Sprite {
+  Timer attackTimer = new Timer(250);
+  Timer runTimer = new Timer(200);
   int invincibleCounter = 0;
   
   Player(PImage[] animation, int width, int height, char up, char down, char left, char right) {
@@ -18,27 +20,21 @@ class Player extends Sprite {
   // Controlli per le azioni e i relativi draw del player
   void movment() {
     if (leftClickPressed) {
-      int delayAttack = 250;
       player.draw(attack, 80, false);
-      if (timerRunning[9]) {
-        int elapsedTime = millis() - startTime[9];
-        if (elapsedTime >= delayAttack) {
-          attackSound.play();
-          leftClickPressed = false;
-          timerRunning[9] = false;
-        }
-      } else startTimer(9);
+      attackTimer.update();
+      if (attackTimer.tick()) {
+        attackSound.play();
+        leftClickPressed = false;
+        attackTimer.reset();
+      }
     }
     else if (keyUpPressed || keyDownPressed || keyLeftPressed || keyRightPressed) {
-      int delaySound = 180;
       player.draw(run, 60, false);
-      if (timerRunning[10]) {
-        int elapsedTime = millis() - startTime[10];
-        if (elapsedTime >= delaySound) {
-          walkSound.play();
-          timerRunning[10] = false;
-        }
-      } else startTimer(10);
+      runTimer.update();
+      if (runTimer.tick()) {
+        walkSound.play();
+        runTimer.reset();
+      }
     }
     else {
       player.draw(idle, 100, false);

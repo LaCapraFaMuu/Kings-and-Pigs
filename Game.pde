@@ -1,13 +1,7 @@
 import java.awt.Rectangle; //<>//
 
-// Metodo per iniziare un nuovo timer
-void startTimer(int i) {
-  startTime[i] = millis();
-  timerRunning[i] = true;
-}
-
-// Metodo per caricare immagini in un array
-void loadAnimations() {
+// Metodo per caricare le immagini
+void loadImages() {
   for (int i = 0; i < idleFrameMax; i++) idle[i] = loadImage("assets/player/idle/" + i + ".png");
   for (int i = 0; i < runFrameMax; i++) run[i] = loadImage("assets/player/run/" + i + ".png");
   for (int i = 0; i < attackFrameMax; i++) attack[i] = loadImage("assets/player/attack/" + i + ".png");
@@ -24,20 +18,20 @@ void loadAnimations() {
   for (int i = 0; i < bombExplosion.length; i++) bombExplosion[i] = 0;
   for (int i = 0; i < bombControls.length; i++) bombControls[i] = true;
   // Caricamento immagini singole
-  backgroundTexture = loadImage(bgPath);
-  playButtonTexture = loadImage(playPath);
-  quitButtonTexture = loadImage(quitPath);
-  bombTexture = loadImage(bombPath);
-  boxTexture = loadImage(boxPath);
-  doorTexture = loadImage(doorPath);
-  cannonTexture = loadImage(cannonPath);
+  backgroundTexture = loadImage("assets/hud/background.png");
+  playButtonTexture = loadImage("assets/hud/play.png");
+  quitButtonTexture = loadImage("assets/hud/quit.png");
+  bombTexture = loadImage("assets/objects/bomb/Bomb.png");
+  boxTexture = loadImage("assets/objects/box/Box.png");
+  doorTexture = loadImage("assets/objects/door/Door.png");
+  cannonTexture = loadImage("assets/objects/cannon/Cannon.png");
   windowTexture = loadImage("assets/objects/windows/Window" + ((int) random(2) + 1) + ".png");
-  heartTexture = loadImage(heartPath);
-  heartBgTexture = loadImage(heartBgPath);
-  gameOverTexture = loadImage(gameOverPath);
-  winGameTexture = loadImage(winGamePath);
-  titleTexture = loadImage(titlePath);
-  kingDeadTexture = loadImage(kingDeadPath);
+  heartTexture = loadImage("assets/hud/heart.png");
+  heartBgTexture = loadImage("assets/hud/LiveBar.png");
+  gameOverTexture = loadImage("assets/hud/GameOver.png");
+  winGameTexture = loadImage("assets/hud/WinGame.png");
+  titleTexture = loadImage("assets/KingsAndPigs.png");
+  kingDeadTexture = loadImage("assets/enemy/dead.png");
 }
 
 void settings() {
@@ -50,20 +44,20 @@ void setup () {
   frameRate(FRAME_RATE);
   background(63,56,81);
   
-  // Caricamento array per animazioni
-  loadAnimations();
+  // Caricamento variabili PImage
+  loadImages();
   
   // Creazione audio
-  backgroundMusic = new Sound(this, bgMusicPath);
-  bossMusic = new Sound(this, bossMusicPath);
-  menuMusic = new Sound(this, menuMusicPath);
-  endMusic = new Sound(this, endMusicPath);
-  winMusic = new Sound(this, winMusicPath);
-  walkSound = new Sound(this, walkPath);
-  attackSound = new Sound(this, attackPath);
-  hitSound = new Sound(this, hitPath);
-  explosionSound = new Sound(this, explosionPath);
-  buttonClick = new Sound(this, buttonClickPath);
+  backgroundMusic = new Sound(this, "assets/sounds/music/Goblins_Den_(Regular).wav");
+  bossMusic = new Sound(this, "assets/sounds/music/Goblins_Dance_(Battle).wav");
+  menuMusic = new Sound(this, "assets/sounds/music/menuMusic.wav");
+  endMusic = new Sound(this, "assets/sounds/music/endMusic.wav");
+  winMusic = new Sound(this, "assets/sounds/music/winMusic.wav");
+  walkSound = new Sound(this, "assets/sounds/effects/walk.wav");
+  attackSound = new Sound(this, "assets/sounds/effects/attack.wav");
+  hitSound = new Sound(this, "assets/sounds/effects/hit.wav");
+  explosionSound = new Sound(this, "assets/sounds/effects/explosion.wav");
+  buttonClick = new Sound(this, "assets/sounds/effects/buttonClick.wav");
   menuMusic.loop();
    
   // Creazione sfondo
@@ -99,7 +93,7 @@ void setup () {
   items[9] = LVL2bomb; items[10] = LVL2bomb2; items[11] = LVL2bomb3; items[12] = LVL2bomb4; items[13] = LVL2box; items[14] = LVL2door;
   
   // Creazione animazioni
-  bombAnimation = new BombAnimation(bombIgnitionAnimation, 128, 128);
+  bombAnimation = new BombExplosionAnimation(bombIgnitionAnimation, 128, 128);
   bombExplosionAnimationObj = new BombExplosionAnimation(bombExplosionAnimation, 128, 128);
   doorAnimation = new DoorAnimation(doorOpeningAnimation, 100, 110); 
 
@@ -154,14 +148,14 @@ void draw() {
         window.draw(true);
         cannon.draw(true);
         bombExplosionAnimationObj.explosionHandler(bombExplosion[0], 0, bomb);
-        doorAnimation.doorOpeningHandler(doorOpening[0], 6, door, 0);
+        doorAnimation.doorOpeningHandler(doorOpening[0], door, 0);
         break;
       case 1:
         LVL1box.draw(true);
         LVL1window.draw(true);
         LVL1window2.draw(true);
         bombExplosionAnimationObj.explosionHandler(bombExplosion[1], 1, LVL1bomb);
-        doorAnimation.doorOpeningHandler(doorOpening[1], 7, LVL1door, 1);
+        doorAnimation.doorOpeningHandler(doorOpening[1], LVL1door, 1);
         break;
       case 2:
         LVL2box.draw(true);
@@ -172,7 +166,7 @@ void draw() {
         bombExplosionAnimationObj.explosionHandler(bombExplosion[3], 3, LVL2bomb2);
         bombExplosionAnimationObj.explosionHandler(bombExplosion[4], 4, LVL2bomb3);
         bombExplosionAnimationObj.explosionHandler(bombExplosion[5], 5, LVL2bomb4);
-        doorAnimation.doorOpeningHandler(doorOpening[2], 8, LVL2door, 2);
+        doorAnimation.doorOpeningHandler(doorOpening[2], LVL2door, 2);
         kingPig.update(); // Update dell'enemy
         if (kingLife > 0) {
           kingHeartBg.draw(false);

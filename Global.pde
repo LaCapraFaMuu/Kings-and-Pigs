@@ -6,16 +6,6 @@ CollisionCheck cCheck = new CollisionCheck();
 
 // ------ Variabili sounds ------
 Sound backgroundMusic, bossMusic, menuMusic, walkSound, attackSound, hitSound, explosionSound, endMusic, winMusic, buttonClick;
-final String bgMusicPath = "assets/sounds/music/Goblins_Den_(Regular).wav";
-final String bossMusicPath = "assets/sounds/music/Goblins_Dance_(Battle).wav";
-final String menuMusicPath = "assets/sounds/music/menuMusic.wav";
-final String endMusicPath = "assets/sounds/music/endMusic.wav";
-final String winMusicPath = "assets/sounds/music/winMusic.wav";
-final String walkPath = "assets/sounds/effects/walk.wav";
-final String attackPath = "assets/sounds/effects/attack.wav";
-final String hitPath = "assets/sounds/effects/hit.wav";
-final String explosionPath = "assets/sounds/effects/explosion.wav";
-final String buttonClickPath = "assets/sounds/effects/buttonClick.wav";
 
 // ------ Variabili tiles ------
 Tiles tile;
@@ -44,22 +34,8 @@ final PImage[] tiles = new PImage[maxScreenCol*maxScreenRow];
 int mapTileNum[][];
 boolean[] collision;
 
-// ------ Variabili per timer ------
-final int totTimers = 17; // 11 Timer nel main | 3 in items | 1 gameOver | 1 KingPig
-final int[] startTime = new int[totTimers];
-final boolean[] timerRunning = new boolean[totTimers];
-
 // ------ Variabili HUD ------
 SingleSprite heart, heart2, heart3, heartBg, kingHeart, kingHeart2, kingHeart3, kingHeartBg,  gameOverImg, winGameImg, titleImg, kingDeadImg, playButton, quitButton, mainTitle, background;
-final String bgPath = "assets/hud/background.png";
-final String playPath = "assets/hud/play.png";
-final String quitPath = "assets/hud/quit.png";
-final String heartPath = "assets/hud/heart.png";
-final String heartBgPath = "assets/hud/LiveBar.png";
-final String gameOverPath = "assets/hud/GameOver.png";
-final String winGamePath = "assets/hud/WinGame.png";
-final String titlePath = "assets/KingsAndPigs.png";
-final String kingDeadPath = "assets/enemy/dead.png";
 PImage heartTexture, heartBgTexture, gameOverTexture, winGameTexture, titleTexture, kingDeadTexture, playButtonTexture, quitButtonTexture, backgroundTexture;
 final int buttonX = screenWidth / 2 - 75;
 final int buttonY = screenHeight / 2;
@@ -128,12 +104,8 @@ final PImage[] kingAttack = new PImage[kingAttackFrameMax];
 final PImage[] kingDead = new PImage[kingDeadFrameMax];
 
 // ------ Variabili per animazioni items ------
-BombAnimation bombAnimation;
-BombExplosionAnimation bombExplosionAnimationObj;
+BombExplosionAnimation bombAnimation, bombExplosionAnimationObj;
 DoorAnimation doorAnimation;
-final int doorOpeningDelay = 505;
-final int bombIgniteDelay = 50;
-final int bombExplosionDelay = 60;
 final int bombIgnitionFrames = 4;
 final int bombExplosionFrames = 5;
 final PImage[] bombIgnitionAnimation = new PImage[bombIgnitionFrames];
@@ -156,7 +128,6 @@ int[] solidObjHeight = new int[totObj];
 int ItemCreationCounter = 0;
 
 // Variabili bomb
-final String bombPath = "assets/objects/bomb/Bomb.png";
 final int bombX = 4 * tileSize + 8;
 final int bombY = 8 * tileSize + 5;
 final int LVL1bombX = 25 * tileSize;
@@ -169,8 +140,8 @@ final int LVL2bombX3 = 18 * tileSize + 5;
 final int LVL2bombY3 = 15 * tileSize;
 final int LVL2bombX4 = 18 * tileSize + 5;
 final int LVL2bombY4 = 19 * tileSize;
+
 // Variabili box
-final String boxPath = "assets/objects/box/Box.png";
 final int boxX = 9 * tileSize;
 final int boxY = 8 * tileSize + 5;
 final int LVL1boxX = 30 * tileSize;
@@ -179,7 +150,6 @@ final int LVL2boxX = 5 * tileSize;
 final int LVL2boxY = 21 * tileSize + 5;
 
 // Variabili door
-final String doorPath = "assets/objects/door/Door.png";
 final int doorOpeningFrames = 5;
 final PImage[] doorOpeningAnimation = new PImage[doorOpeningFrames];
 final int doorX = 11 * tileSize + 20;
@@ -190,12 +160,10 @@ final int LVL2doorX = 24 * tileSize + 20;
 final int LVL2doorY = 17 * tileSize - 12;
 
 // Variabili cannon
-final String cannonPath = "assets/objects/cannon/Cannon.png";
 final int cannonX = 9 * tileSize + 15;
 final int cannonY = 6 * tileSize;
 
 // Variabili window
-String windowPath;
 final int windowX = 5 * tileSize + 10;
 final int windowY = 5 * tileSize;
 final int LVL1windowX = 22 * tileSize + 10;

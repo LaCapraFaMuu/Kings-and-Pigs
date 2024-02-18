@@ -126,10 +126,6 @@ class CollisionCheck {
          itemX = LVL2doorX;
          itemY = LVL2doorY;
          break;
-       case 18:
-         itemX = cannonX;
-         itemY = cannonY;
-         break;
       }
       
       switch (direction) {
@@ -188,7 +184,7 @@ class CollisionCheck {
     boolean control = false;
     Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
     if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
-      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x - 50, bombExplosionAnimationObj.y - 50, 100, 100);
+      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x - 50, bombExplosionAnimationObj.y - 50, 150, 150);
       if (playerHitbox.intersects(explosionArea)) control = true;
     }
     return control;
