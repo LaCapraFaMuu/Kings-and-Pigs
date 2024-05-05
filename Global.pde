@@ -1,4 +1,4 @@
-// ------ Variabili gioco ------
+// ------- Variabili gioco -------
 final String GAME_TITLE = "Kings and Pigs";
 final int FRAME_RATE = 60;
 boolean startGame = false;

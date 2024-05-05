@@ -8,5 +8,6 @@ class WinGame {
     bossMusic.stop();
     backgroundMusic.stop();
     winMusic.loop();
+    
   }
 }

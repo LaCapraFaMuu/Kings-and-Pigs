@@ -20,4 +20,5 @@ class DoorAnimation extends Sprite {
         }
     }
   }
+  
 }

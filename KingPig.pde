@@ -1,5 +1,5 @@
 class KingPig extends Sprite {
-  Timer directionTimer = new Timer(1500);
+  Timer directionTimer = new Timer(1000);
   boolean isMoving = false;
   int invincibleCounter = 0;
   int deathCounter = 0;

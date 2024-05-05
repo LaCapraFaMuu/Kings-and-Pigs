@@ -25,4 +25,5 @@ class GameOver {
       singleActionTimer.reset();
     }
   }
+  
 }

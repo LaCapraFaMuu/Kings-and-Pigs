@@ -184,7 +184,7 @@ class CollisionCheck {
     boolean control = false;
     Rectangle playerHitbox = new Rectangle(screenX, screenY, solidAreaWidth, solidAreaHeight);
     if(i == 0 || i == 4 || i == 9 || i == 10 || i == 11 || i == 12) {
-      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x - 50, bombExplosionAnimationObj.y - 50, 150, 150);
+      Rectangle explosionArea = new Rectangle(bombExplosionAnimationObj.x - 50, bombExplosionAnimationObj.y - 50, 150, 100);
       if (playerHitbox.intersects(explosionArea)) control = true;
     }
     return control;

@@ -118,4 +118,5 @@ class Player extends Sprite {
       worldX += playerSpeed;
     }
   }
+  
 }
