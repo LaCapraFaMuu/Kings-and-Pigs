@@ -38,18 +38,30 @@ class Player extends Sprite {
   void keyPressed(char key) {
     if (key == keyUp) {
       keyUpPressed = true;
+      keyDownPressed = false;
+      keyLeftPressed = false;
+      keyRightPressed = false;
       direction = "Up";
     }
     if (key == keyDown) {
       keyDownPressed = true;
+      keyUpPressed = false;
+      keyLeftPressed = false;
+      keyRightPressed = false;
       direction = "Down";
     }
     if (key == keyLeft) {
       keyLeftPressed = true;
+      keyUpPressed = false;
+      keyDownPressed = false;
+      keyRightPressed = false;
       direction = "Left";
     }
     if (key == keyRight) {
       keyRightPressed = true;
+      keyUpPressed = false;
+      keyDownPressed = false;
+      keyLeftPressed = false;
       direction = "Right";
     }
   }
